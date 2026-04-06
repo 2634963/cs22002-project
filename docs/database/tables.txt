@@ -1,0 +1,36 @@
+The tables required for the database in this project to serve its purpose are as follows:
+
+---------------
+Post
+---------------
+ID (PK) - int
+Poster ID (FK) - int
+Title - string
+Content - string
+Extra Info - string
+Approved - bool
+---------------
+
+---------------
+Comment
+---------------
+ID (PK) - int
+Post ID (FK) - int
+Content - string
+Approved - bool
+
+---------------
+User
+---------------
+ID (PK) - int
+Password (hashed etc) - int
+Admin - bool
+---------------
+
+---------------
+Paid For Extra Info (Joining)
+---------------
+Payment ID (PK) - int
+User ID (FK) - int
+Post ID (FK) - int
+---------------
