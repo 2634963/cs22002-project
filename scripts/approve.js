@@ -33,11 +33,10 @@ function createPost() {
     var post = document.createElement('div');
 
     //add CSS Card styling to post
-    post.style.border = '3px solid #999999';
-    post.style.borderRadius = '3px';
-    post.style.display = 'grid';
-    post.style.gridTemplateRows = 'max-content 200px 1fr';
-    post.style.textAlign = 'center';
+    post.getElementsByClassName('card');
+
+    //add post content to post element
+    post.innerHTML = '<h2>' + postData.title + '</h2><p>' + postData.content + '</p>';
     
     
 }
