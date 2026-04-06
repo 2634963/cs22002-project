@@ -10,16 +10,15 @@ const usernameInput = document.getElementById('username');
 const passwordInput = document.getElementById('password');
 
 //check against backend (eventually)
-loginForm.addEventListener('login', function(event) {
-    event.preventDefault(); 
+loginForm.addEventListener('submit', function(event) {
+    event.preventDefault();
     const username = usernameInput.value;
     const password = passwordInput.value;
 
     console.log('Username:', username);
     console.log('Password:', password);
 
-    window.location.href = "/pages/adminDashboard.html";
-
+    window.location.href = "/pages/admin/adminDashboard.html";
 });
 
 //create login function
@@ -30,5 +29,5 @@ function login() {
     console.log('Username:', username);
     console.log('Password:', password);
 
-    window.location.href = "/pages/adminDashboard.html";
+    window.location.href = "/pages/admin/adminDashboard.html";
 }
