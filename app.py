@@ -2,6 +2,8 @@ import flask
 
 app = flask.Flask(__name__)
 
+import api
+
 def getFile(filePath: str, relative: bool=True) -> str:
     if relative:
         filePath = "./" + filePath
@@ -26,7 +28,21 @@ def getFile(filePath: str, relative: bool=True) -> str:
 @app.route("/<path:path>")
 def servePage(path):
     if not path:
-        return getFile("pages/main.html")
+        return getFile("/pages/main.html")
+
+    if path == "./favicon.ico":
+        return flask.Response(status=404)
+
+    if path.split("/")[0] == "api":
+        splitPath = path.split("/")
+
+        if len(splitPath) == 1:
+            return flask.Response(status=404)
+
+        if splitPath[1] in api.endpoints:
+            api.endpoints[splitPath[1]]["module"].call()
+
+        return flask.Response(status=404)
 
     mimeType = "text/html"
 
