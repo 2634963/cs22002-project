@@ -4,8 +4,9 @@
 
     <head>
         <!-- Links to Styles sheet -->
-        <link rel="stylesheet" href="../stylesheets/loginStyles.css">
-        <link rel="stylesheet" href="../stylesheets/navbar.css">
+        <link rel="stylesheet" href="/stylesheets/loginStyles.css">
+        <link rel="stylesheet" href="/stylesheets/navbar.css">
+        <script src="/scripts/login.js" defer></script>
         
         <title> Fess Up </title>
     </head>
@@ -18,6 +19,25 @@
                 <li><a href="/pages/login.html" class="active">Admin Login</a></li>
             </ul>
         </div>
+
+        <h1> Admin Login </h1>
+
+        <!-- LOGIN FORM IMPORTANT NEED SCRIPTS REALLY IMPORTANT-->
+        <div class="login-container">
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit" id="login">Login</button>
+            </form>
+        </div>
+
     </body>
 
+    
 </html>

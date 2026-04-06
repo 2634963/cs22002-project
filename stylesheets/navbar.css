@@ -9,7 +9,7 @@
     list-style-type: none;
     margin: 0;
     padding: 0;
-    background-color: #333333;
+    background-color: palegreen;
     display: flex;
     top: 0;
     left: 0;
@@ -27,7 +27,7 @@
     }
 
     ul li a:hover {
-    background-color: #111111;
+    background-color: darkseagreen;
     }
 
 }
