@@ -2,6 +2,9 @@
 
 console.log("Login script loaded");
 
+//connect to james api
+fetch('http://127.0.0.1:5500/api/log?message=hello');
+
 const loginForm = document.getElementById('login-form');
 const usernameInput = document.getElementById('username');
 const passwordInput = document.getElementById('password');
@@ -15,7 +18,7 @@ loginForm.addEventListener('login', function(event) {
     console.log('Username:', username);
     console.log('Password:', password);
 
-    location.replace("/pages/adminDashboard.html");
+    window.location.href = "/pages/adminDashboard.html";
 
 });
 
@@ -27,5 +30,5 @@ function login() {
     console.log('Username:', username);
     console.log('Password:', password);
 
-    location.replace("/pages/adminDashboard.html");
+    window.location.href = "/pages/adminDashboard.html";
 }
