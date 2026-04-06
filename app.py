@@ -40,7 +40,9 @@ def servePage(path):
             return flask.Response(status=404)
 
         if splitPath[1] in api.endpoints:
-            api.endpoints[splitPath[1]]["module"].call()
+            apiResponse = api.endpoints[splitPath[1]]["module"].call(flask.request.args)
+
+            return flask.Response(status=apiResponse)
 
         return flask.Response(status=404)
 
