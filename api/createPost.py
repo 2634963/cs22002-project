@@ -1,12 +1,13 @@
 print(__file__ + " has nothing to do with the database and must be updated")
 
 def call(args):
-    print("attempted login")
-
-    if "username" not in args:
+    if "title" not in args:
         return 400
 
-    if "password" not in args:
+    if "content" not in args:
+        return 400
+
+    if "authorUserId" not in args:
         return 400
 
     return 200

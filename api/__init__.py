@@ -2,6 +2,7 @@
 import api.makePayment as makePayment
 import api.attemptLogin as attemptLogin
 import api.log as log
+import api.createPost as createPost
 
 # a list of every endpoint that should be accessible to an end user
 # an api function that isnt in this dict can still be called from other python files but will not be accessoible from /api/<endpoint>
@@ -19,5 +20,10 @@ endpoints = {
     "log":{
         "requires":[],
         "module":log
+    },
+
+    "createPost":{
+        "requires":["title", "content", "authorUserId"],
+        "module":createPost
     }
 }

@@ -1,3 +1,5 @@
+print(__file__ + " has nothing to do with the database and must be updated")
+
 import requests
 
 PAYMENT_PROCESSOR_URL = "http://127.0.0.1:3001"

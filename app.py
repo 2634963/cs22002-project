@@ -6,6 +6,9 @@ import api
 
 # function for getting a file, this way any file that exists in the /pages/
 def getFile(filePath: str) -> str:
+    if filePath.startswith("/"):
+        filePath = "." + filePath
+
     # put it in a try catch block so that if the file isnt found we can return an error message
     try:
         # open the file if it exists
@@ -31,10 +34,10 @@ def getFile(filePath: str) -> str:
 def servePage(path):
     # blank path means main page
     if not path:
-        return getFile("/pages/main.html")
+        return getFile("./pages/main.html")
 
     # dont currently have a favicon
-    if path == "./favicon.ico":
+    if (path == "./favicon.ico") or (path == "favicon.ico"):
         return flask.Response(status=404)
 
     # api calls are handled separately to pages
