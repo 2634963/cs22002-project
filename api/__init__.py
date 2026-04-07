@@ -12,6 +12,7 @@ import api.userRemoveComment        as userRemoveComment
 import api.getComments              as getComments
 import api.getExtraInfo             as getExtraInfo
 import api.adminGiveCommentApproval as adminGiveCommentApproval
+import api.createAccount            as createAccount
 
 
 # a list of every endpoint that should be accessible to an end user
@@ -93,5 +94,11 @@ endpoints = {
         #            string
         "requires":["postId"],
         "module":getExtraInfo
+    },
+
+    "createAccount":{
+        #
+        "requires":["username", "password"],
+        "module":createAccount
     }
 }
