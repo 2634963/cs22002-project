@@ -23,24 +23,11 @@
 
         <h1> Admin Dashboard</h1>
 
+        <!-- TEMP SPAWN BUTTON -->
+        <button onclick="createApprovalRequest()">Spawn Approval Card</button>
+
         <!-- Create Admin Cards -->
-        <div class  = "admin-cards">
-
-            <div class="admin-card">
-                <h2>Card 1</h2>
-                <p>This is the content for card 1.</p>
-                <button class="approve-button" id = "approve">Approve</button>
-                <button class="deny-button" id="deny">Deny</button>
-                <p class="admin-card-footer">Posted by ID: 231</p>
-            </div>
-
-            <div class="admin-card">
-                <h2>Card 2</h2>
-                <p>This is the content for card 2.</p>
-                <button class="approve-button" id ="approve">Approve</button>
-                <button class="deny-button" id="deny">Deny</button>
-                <p class="admin-card-footer">Posted by ID: 512</p>
-            </div>
+        <div class  = "admin-cards" id = "cardContainer">
 
         </div>
     </body>

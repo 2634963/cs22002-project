@@ -23,25 +23,37 @@ denyButton.addEventListener('click', function() {
     console.log('Deny button clicked');
 });
 
+//create approval request (lacking backend connection) (its making stuff up) (totally legit) (scratch that, ts hardcoded to f)
+function createApprovalRequest() {
+    console.log('Approval request created for post ID: ' + postData.id);
 
+    var card = document.createElement("div");
+    card.classList.add("admin-card");
 
-//create post... 
-function createPost() {
-    console.log('Post created');
+    //Creat content for card
+    var cardContent = '<h2>' + postData.title + '</h2> <p>' + postData.content + '</p> <button class="approve-button" id = "approve" onclick="approve(this)">Approve</button> <button class="deny-button" id="deny" onclick="deny(this)">Deny</button> <div class="admin-card-footer">Posted by ID: ' + postData.posterId + '</div>'
+    ;
 
-    //create dynamic post element
-    var post = document.createElement('div');
+    card.innerHTML = cardContent;
 
-    //add CSS Card styling to post
-    post.getElementsByClassName('card');
-
-    //add post content to post element
-    post.innerHTML = '<h2>' + postData.title + '</h2><p>' + postData.content + '</p>';
-    
-    
+    //append onto the grid
+    var container = document.getElementById("cardContainer");
+    container.appendChild(card);
 }
 
+
 //delete post (DELETES POST FROM DATABASE) (IMPLEMENT LATER)
-function deletePost() {
+function deny(element) {
     console.log('Post deleted');
+
+    var card = element.parentElement;
+    card.remove();
+}
+
+//approve post (+3999 sociall credit)#
+function approve(element) {
+    console.log('Post approved');
+
+    var card = element.parentElement;
+    card.remove();
 }
