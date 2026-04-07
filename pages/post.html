@@ -7,6 +7,8 @@
         <link rel="stylesheet" href="/stylesheets/postStyles.css">
         <link rel="stylesheet" href="/stylesheets/navbar.css">
         
+        <script src="/scripts/createPost.js" defer></script>
+
         <title> Fess Up </title>
     </head>
 
@@ -17,6 +19,24 @@
                 <li><a href="/pages/post.html">Create Post</a></li>
                 <li><a href="/pages/login.html" class="active">Admin Login</a></li>
             </ul>
+        </div>
+
+        <h1> Create a Post </h1>
+
+        <div class = "post-container">
+            <form id = "postForm">
+                <div class = "form-group">
+                    <label for="title">Title: <br></label>
+                    <input type="text" id="title" name="title" required>
+                </div>
+
+                <div class = "form-group">
+                    <label for="content">Content: <br></label>
+                    <textarea id="content" name="content" rows="20" cols="60" required></textarea>
+                </div>
+
+                <button type="submit" id="submit-post">Submit Post</button>
+            </form>
         </div>
     </body>
 

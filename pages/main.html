@@ -7,8 +7,9 @@
         <link rel="stylesheet" href="/stylesheets/mainStyles.css">
         <link rel="stylesheet" href="/stylesheets/navbar.css">
 
-        <!-- Dark Mode Script -->
+        <!-- Scripts self explanatory -->
         <script src="/scripts/darkmode.js" defer></script>
+        <script src="/scripts/createMainPost.js" defer></script>
         
         <title> fess up </title>
     </head>
@@ -22,46 +23,29 @@
                 <li><a href="/pages/login.html">Admin Login</a></li>
             </ul>
         </div>
+        
+        <br>
+        <br>
+        <br>
+        <br>
 
+        <!-- These buttons should be Temp-->
+        <!-- Dark Mode Button Toggle-->
+        <button id="theme-toggle">Toggle Dark Mode</button>
+
+        <!-- Button for creating posts -->
+        <button onclick="createPost()">Create Post</button>
+
+        <!-- infinite posts button -->
+        <button onclick="createInfinitePosts()">Create Infinite Posts</button>
+
+        <h1> Fess Up</h1>
+        
         <br>
         <br>
         
-        <!-- Cards for Fess Up (THESE ARE HARDCODED)-->
-         <div class = cards>
-            <div class = card>
-                <h2> Card 1 </h2>
-                <p> This is the first card </p>
-            </div>
-
-            <div class = card>
-                <h2> Card 2 </h2>
-                <p> This is the second card </p>
-            </div>
-
-            <div class = card>
-                <h2> Card 3 </h2>
-                <p> This is the third card </p>
-            </div>
-
-            <div class = card>
-                <h2> Card 3 </h2>
-                <p> This is the third card </p>
-            </div>
-
-            <div class = card>
-                <h2> Card 3 </h2>
-                <p> This is the third card </p>
-            </div>
-
-            <div class = card>
-                <h2> Card 3 </h2>
-                <p> This is the third card </p>
-            </div>
-
-            <div class = card>
-                <h2> Card 3 </h2>
-                <p> This is the third card </p>
-            </div>
+        <!-- Cards for Fess Up (press button to generate)-->
+         <div class = cards id = "cardContainer">
 
          </div>
 

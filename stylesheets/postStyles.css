@@ -1,1 +1,28 @@
 /* Main Styles for create post page */
+
+h1 { 
+    text-align: center;
+    margin-top: 45px;
+    font-family: 'Trebuchet MS', sans-serif;
+}
+
+.post-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 40px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-family: 'Trebuchet MS', sans-serif;
+    text-align: center;
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    textarea{
+        text-align: center;
+    }
+
+}

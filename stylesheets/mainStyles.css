@@ -1,5 +1,11 @@
 /* Main Styles for main page */
 
+h1 { 
+    text-align: center;
+    margin-top: 45px;
+    font-family: 'Trebuchet MS', sans-serif;
+}
+
 /* create card style */
 .cards {
     max-width: 700px;
