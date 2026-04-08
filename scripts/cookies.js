@@ -1,6 +1,6 @@
 //Cookies for the Cooked
 
-function createCookie(name, value, days){
+/*function createCookie(name, value, days){
     console.log("create cookie function called");
 
     const cook = new date();
@@ -8,9 +8,9 @@ function createCookie(name, value, days){
 
     const expires = "expires=" + cook.toUTCString();
     document.cookie = name + "=" + value + ";" + expires + ";path=/";
-}
+}*/
 
-function getCookie(pname){
+/*function getCookie(pname){
     console.log("get cookie function called");
 
     let name = pname + "=";
@@ -26,9 +26,9 @@ function getCookie(pname){
         }
     }
     return "";
-}
+}*/
 
-function checkCookie(name){
+/*function checkCookie(name){
     let username = getCookie(name);
     if (username != ""){
         alert(username);
@@ -40,10 +40,10 @@ function checkCookie(name){
             createCookie("usrename", username, 365);
         }
     }
-}
+}*/
 
 
-checkCookie("username");
+//checkCookie("username");
 
 
 

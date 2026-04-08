@@ -17,7 +17,6 @@ def getFile(filePath: str) -> str:
             returnString = ""
             for line in openedFile.readlines():
                 returnString += line
-                returnString += '\n'
 
             return returnString
 

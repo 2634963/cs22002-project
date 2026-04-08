@@ -40,6 +40,12 @@
         <!-- infinite posts button -->
         <button onclick="createInfinitePosts()">Create Infinite Posts</button>
 
+        <!-- Button for creating post with comments-->
+        <button onclick="createPostWithComment()">Create Post with Comments</button>
+
+        <!-- modal button-->
+        <button onclick="comment()">Comment Modal</button>
+        
         <h1> Fess Up</h1>
 
         <br>
@@ -49,6 +55,14 @@
          <div class = cards id = "cardContainer">
 
          </div>
+
+        <div id="commentModal" class="modal">
+          <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Leave a comment</h2>
+            <p>Comments go here.</p>
+          </div>
+        </div>
 
     </body>
 
