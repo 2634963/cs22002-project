@@ -1,24 +1,49 @@
-import mysql
-import mysql.connector
+#database
+import sqlite3
+import json
 
-databaseConnection = mysql.connector.connect(host="localhost", user="root", password="password")
-database = databaseConnection.cursor()
-
-try:
-    print("using an existing database")
-    database.execute("use fessUpDatabase")
-    database.execute("drop database fessUpDatabase")
-    database.execute("create database fessUpDatabase")
-except mysql.connector.errors.ProgrammingError:
-    print("making a new database")
-    database.execute("create database fessUpDatabase")
-
-database.execute("use fessUpDatabase;")
+#connect to database
+def connectDb():
+    try:
+        connection = sqlite3.connect("./fessUpDatabase.db")
+        database = connection.cursor()
+        print("COnected Database")
+        return database, connection
+    except:
+        print("Failed to connerct")
 
 
-with open("./deploy/schema.sql", "r") as schemaFile:
-    fullFile = ""
-    for line in schemaFile.readlines():
-        fullFile += line
+def createPostTable(database, connection):
+    createTable = 'CREATE TABLE IF NOT EXSTS posts (postID INTEGER PRIMARY KEY, posterID INTEGER, title TEXT, content TEXT, extraInfo TEXT NULL, approved INTEGER)'
+    database.execute(createTable)
+    connection.commit()
 
-    database.execute(fullFile)
+def createUserTable(database, connection):
+    createTable = 'CREATE TABLE IF NOT EXSTS users (userID INTEGER PRIMARY KEY, username TEXT, password TEXT, admin INTEGER)'
+    database.execute(createTable)
+    connection.commit()
+
+def createExtraInfoAccessTable(database, connection):
+    createTable = 'CREATE TABLE IF NOT EXSTS users (paymentID INTEGER PRIMARY KEY, userID INTEGER, postID INTEGER)'
+    database.execute(createTable)
+    connection.commit()
+
+def createCommentTable(database, connection):
+    createTable = 'CREATE TABLE IF NOT EXSTS users (commentID INTEGER PRIMARY KEY, postID INTEGER, content TEXT, approved INTEGER)'
+    database.execute(createTable)
+    connection.commit()
+
+def createTables(database, connection):
+    createPostTable(database, connection)
+    createUserTable(database, connection)
+    createExtraInfoAccessTable(database, connection)
+    createCommentTable(database, connection)
+    print("Tables Create / Exist")
+
+def loadPostData(database, connection):
+    print("Loading post data...")
+
+database, connection = connectDb()
+
+createTables(database, connection)
+

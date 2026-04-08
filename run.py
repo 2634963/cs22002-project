@@ -6,14 +6,15 @@ paymentServerString = sys.executable + " -m flask --app pretendExternal/paymentP
 
 mainServerString = sys.executable + " -m flask run -p 3000 --debug"
 
-def run(string):
-    os.system(string)
+# def run(string):
+    # os.system(string)
+#
+# commands = [
+    # f""" powershell "Invoke-Expression '{paymentServerString}'" """,
+    # f""" powershell "Invoke-Expression '{mainServerString}'" """
+# ]
 
-commands = [
-    f""" powershell "Invoke-Expression '{paymentServerString}'" """,
-    f""" powershell "Invoke-Expression '{mainServerString}'" """
-]
-
-if __name__ == "__main__":
-    with multiprocessing.Pool(processes=2) as pool:
-        pool.map(run, commands)
+# if __name__ == "__main__":
+    # with multiprocessing.Pool(processes=2) as pool:
+        # pool.map(run, commands)
+os.system(sys.executable + " -m flask run -p 5500 --debug")
