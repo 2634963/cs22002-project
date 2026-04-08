@@ -1,10 +1,12 @@
-app.py has the main project
+# FessUp
 
-paymentProcessor.py in /pretendExternal/ has a second flask app that is a very simplified emulation of a third party payment processor
-this is meant to be used as if it were a third party payment processor
+A mock anonymous social media platform.
+By Aiden Isik, James Dunbar and Ewan McMahon.
 
-make sure to run them on different ports if hosting locally
+## Running
+
+Click [here](./RUNNING.md) for prerequisites and instructions on running the system.
 
 ## Internal Documentation
 
-For documentation of the internal workings of the system, click [here](./docs/README.md)
+For documentation of the internal workings of the system, click [here](./docs/README.md).
