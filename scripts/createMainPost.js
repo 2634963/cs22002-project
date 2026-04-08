@@ -43,7 +43,13 @@ function createNumberedPost() {
 }
 
 function createInfinitePosts() {
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < 10; i++) {
         createNumberedPost();
     }
+}
+
+function loadPosts() {
+    console.log('loading posts');
+
+    fetch('127.0.0.1:5500/api/')
 }
