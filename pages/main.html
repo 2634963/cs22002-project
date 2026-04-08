@@ -1,13 +1,12 @@
 <!-- Main Page for fess up-->
 <!DOCTYPE html>
 <html lang="en">
-
     <head>
-        <!-- Links to Styles sheet -->
+        <!-- Styles -->
         <link rel="stylesheet" href="/stylesheets/mainStyles.css">
         <link rel="stylesheet" href="/stylesheets/navbar.css">
 
-        <!-- Scripts self explanatory -->
+        <!-- Scripts -->
         <script src="/scripts/darkmode.js" defer></script>
         <script src="/scripts/createMainPost.js" defer></script>
         <script src="/scripts/cookies.js"></script>
@@ -16,7 +15,7 @@
     </head>
 
     <body>
-        <!-- Navbar for Fess Up-->
+        <!-- Navbar -->
         <div class = "navbar">
             <ul>
                 <li><a href="/pages/main.html" class="active">Fess Up</a></li>
@@ -31,7 +30,7 @@
         <br>
 
         <!-- These buttons should be Temp-->
-        <!-- Dark Mode Button Toggle-->
+        <!-- Dark Mode Button Toggle -->
         <button id="theme-toggle">Toggle Dark Mode</button>
 
         <!-- Button for creating posts -->
@@ -40,30 +39,29 @@
         <!-- infinite posts button -->
         <button onclick="createInfinitePosts()">Create Infinite Posts</button>
 
-        <!-- Button for creating post with comments-->
+        <!-- Button for creating post with comments -->
         <button onclick="createPostWithComment()">Create Post with Comments</button>
 
         <!-- modal button-->
         <button onclick="comment()">Comment Modal</button>
         
-        <h1> Fess Up</h1>
+        <h1>FessUp</h1>
 
         <br>
         <br>
         
         <!-- Cards for Fess Up (press button to generate)-->
-         <div class = cards id = "cardContainer">
+         <div class="cards" id="cardContainer">
 
          </div>
 
         <div id="commentModal" class="modal">
           <div class="modal-content">
             <span class="close">&times;</span>
-            <h2>Leave a comment</h2>
+            <h2>Comments</h2>
             <p>Comments go here.</p>
           </div>
         </div>
-
     </body>
 
 </html>
