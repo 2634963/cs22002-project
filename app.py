@@ -3,6 +3,7 @@ import flask
 app = flask.Flask(__name__)
 
 import api
+import json
 
 # function for getting a file, this way any file that exists in the /pages/
 def getFile(filePath: str) -> str:
@@ -30,8 +31,16 @@ def getFile(filePath: str) -> str:
 # this is the function flask calls whenever a request is made
 # it will use the above function to go and find, then serve, any page that exists
 @app.route("/", defaults={"path":""})
-@app.route("/<path:path>")
+@app.route("/<path:path>", methods=["GET", "POST"])
 def servePage(path):
+    requestArgs = {
+        "args":flask.request.args,
+        "cookies":flask.request.cookies
+    }
+
+    if flask.request.method == "POST":
+        requestArgs["args"] = json.loads(flask.request.data)
+
     # blank path means main page
     if not path:
         return getFile("./pages/main.html")
@@ -51,9 +60,9 @@ def servePage(path):
         # if the requested endpoint exists
         if splitPath[1] in api.endpoints:
             # call said endpoint and get its return code
-            apiResponse = api.endpoints[splitPath[1]]["module"].call(flask.request.args) # yes this is hacky but it works
+            apiResponse = api.endpoints[splitPath[1]]["module"].call(requestArgs) # yes this is hacky but it works
 
-            return flask.Response(status=apiResponse)
+            return apiResponse
 
         return flask.Response(status=404)
 

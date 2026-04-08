@@ -36,8 +36,8 @@ endpoints = {
     },
 
     "createPost":{
-        #            string   string     string
-        "requires":["title", "content", "authorUserId"],
+        #            string   string
+        "requires":["title", "content"],
         "module":createPost
     },
 
