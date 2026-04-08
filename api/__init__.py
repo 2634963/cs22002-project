@@ -14,7 +14,6 @@ import api.getExtraInfo             as getExtraInfo
 import api.adminGiveCommentApproval as adminGiveCommentApproval
 import api.createAccount            as createAccount
 
-
 # a list of every endpoint that should be accessible to an end user
 # an api function that isnt in this dict can still be called from other python files but will not be accessoible from /api/<endpoint>
 endpoints = {

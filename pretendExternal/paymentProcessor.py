@@ -3,8 +3,6 @@
 from flask import Flask
 from flask import request
 
-from markupsafe import escape
-
 app = Flask(__name__)
 
 # as long as the connection is https, an attacker can only see domain and subdomain of a connection
