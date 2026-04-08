@@ -4,26 +4,19 @@
     <head>
         <!-- Styles -->
         <link rel="stylesheet" href="/stylesheets/mainStyles.css">
-        <link rel="stylesheet" href="/stylesheets/navbar.css">
 
         <!-- Scripts -->
         <script src="/scripts/darkmode.js" defer></script>
         <script src="/scripts/createMainPost.js" defer></script>
         <script src="/scripts/cookies.js"></script>
         
-        <title> fess up </title>
+        <title>FessUp</title>
     </head>
 
     <body>
-        <!-- Navbar -->
-        <div class = "navbar">
-            <ul>
-                <li><a href="/pages/main.html" class="active">Fess Up</a></li>
-                <li><a href="/pages/post.html">Create Post</a></li>
-                <li><a href="/pages/login.html">Admin Login</a></li>
-            </ul>
-        </div>
-        
+        <span id="navbar"></span>
+        <script src="/scripts/include.js" onload="includeHTML('/pages/navbar.html', 'navbar')"></script>
+
         <br>
         <br>
         <br>
@@ -56,12 +49,14 @@
          </div>
 
         <div id="commentModal" class="modal">
-          <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Comments</h2>
-            <p>Comments go here.</p>
-          </div>
+            <div class="modal-content">
+                <!-- Close button -->
+                <span class="close">&times;</span>
+
+                <!-- Comments list -->
+                <h2>Comments</h2>
+                <span id="comments"></span>
+            </div>
         </div>
     </body>
-
 </html>

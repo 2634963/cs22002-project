@@ -5,20 +5,15 @@
     <head>
         <!-- Links to Styles sheet -->
         <link rel="stylesheet" href="/stylesheets/loginStyles.css">
-        <link rel="stylesheet" href="/stylesheets/navbar.css">
+
         <script src="/scripts/login.js" defer></script>
         
         <title>FessUp</title>
     </head>
 
     <body>
-        <div class = "navbar">
-            <ul>
-                <li><a href="/pages/main.html">Fess Up</a></li>
-                <li><a href="/pages/post.html">Create Post</a></li>
-                <li><a href="/pages/login.html" class="active">Admin Login</a></li>
-            </ul>
-        </div>
+        <span id="navbar"></span>
+        <script src="/scripts/include.js" onload="includeHTML('/pages/navbar.html', 'navbar')"></script>
 
         <h1>Login</h1>
 

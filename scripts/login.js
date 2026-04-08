@@ -26,7 +26,9 @@ loginForm.addEventListener('submit', async function(event) {
         method: "POST",
         body: JSON.stringify({username: usernameInput,
                               password: passwordInput})
-    }).then(response => response.text()).then(text => loginResponseText = text);
+    })
+          .then(response => response.text())
+          .then(text => loginResponseText = text);
 
     if(!loginResponse.ok) {
         // Login details were incorrect, error
