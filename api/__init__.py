@@ -60,8 +60,8 @@ endpoints = {
     },
 
     "postComment":{
-        #            string    string    string
-        "requires":["postId", "userId", "content"],
+        #            string    string
+        "requires":["postId", "content"],
         "module":postComment
     },
 
