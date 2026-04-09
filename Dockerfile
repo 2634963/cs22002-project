@@ -10,7 +10,6 @@ COPY . .
 # Install all required dependencies
 RUN pip install -r requirements.txt
 
-# Run Flask at port 5000
-EXPOSE 5000
-
-CMD ["flask", "run", "-p", "5000", "--host=0.0.0.0", "--debug"]
+# Run Flask at port 3000
+EXPOSE 3000
+CMD ["python3", "run-nix.py"]
