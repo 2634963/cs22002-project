@@ -1,4 +1,4 @@
-// login script for admin login page
+// login script for login page
 
 console.log("Login script loaded");
 
