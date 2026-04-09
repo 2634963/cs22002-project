@@ -22,5 +22,4 @@ def call(args):
     else:
         return flask.Response("invalid approval value", 400)
 
-
     return flask.Response(status=200)
