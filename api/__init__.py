@@ -1,5 +1,4 @@
 # import every api endpoint file
-import api.makePayment              as makePayment
 import api.login                    as login
 import api.log                      as log
 import api.createPost               as createPost
@@ -14,16 +13,11 @@ import api.getExtraInformation      as getExtraInformation
 import api.adminGiveCommentApproval as adminGiveCommentApproval
 import api.signup                   as signup
 import api.getUsernameFromUserId    as getUsernameFromUserId
+import api.purchaseExtraInformation as purchaseExtraInformation
 
 # a list of every endpoint that should be accessible to an end user
 # an api function that isnt in this dict can still be called from other python files but will not be accessoible from /api/<endpoint>
 endpoints = {
-    "makePayment":{
-        #            16d int       int            int           int    int
-        "requires":["cardNumber", "expireMonth", "expireYear", "ccv", "paymentAmountPence"],
-        "module":makePayment
-    },
-
     "login":{
         #            string      string
         "requires":["username", "password"],
@@ -105,5 +99,10 @@ endpoints = {
     "getUsernameFromUserId":{
         "requires":["userId"],
         "module":getUsernameFromUserId
+    },
+
+    "purchaseExtraInformation":{
+        "requires":["postId", "cardNumber", "expireMonth", "expireYear", "ccv", "paymentAmountPence"],
+        "module":purchaseExtraInformation
     }
 }

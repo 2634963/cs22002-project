@@ -14,14 +14,16 @@ def call(args):
         return flask.Response("please sign in", 401)
 
     if not verifyAuthToken(args["cookies"]["authToken"]):
-        return flask.Response("please sign in again", 401)
+        return flask.Response("please sign in", 401)
 
     if not len(args["args"]["content"]):
         return flask.Response("no comment content", 422)
 
     commentId = database.execute("select count(*) from comments").fetchall()[0][0]
 
-    database.execute(f"INSERT INTO comments (postID, content, approved, commentID) VALUES ('{args["args"]["postId"]}', '{args["args"]["content"]}', '0', '{commentId}')")
+    userId = database.execute(f"select * from authTokens where authTokenString='{args["cookies"]["authToken"]}'").fetchall()[0][0]
+
+    database.execute(f"INSERT INTO comments (postID, userID, content, approved, commentID) VALUES ('{args["args"]["postId"]}', '{userId}', '{args["args"]["content"]}', '0', '{commentId}')")
 
     connection.commit()
 

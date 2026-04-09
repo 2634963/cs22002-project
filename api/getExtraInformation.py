@@ -1,11 +1,25 @@
 from api._databaseConnection import database
+from api._getAuthToken import verifyAuthToken
 
 import flask
-
-print(__file__ + " has nothing to do with the database and must be updated")
 
 def call(args):
     if "postId" not in args["args"]:
         return flask.Response("no post id", 400)
 
-    return flask.Response(status=501)
+    if "authToken" not in args["cookies"]:
+        return flask.Response("please sign in", 401)
+
+    if not verifyAuthToken(args["cookies"]["authToken"]):
+        return flask.Response("please sign in", 401)
+
+    userId = database.execute(f"select userID from authTokens where authTokenString='{args["cookies"]["authToken"]}'").fetchall()[0][0]
+
+    extraInfoList = database.execute(f"select * from extraInfoAccess where userID='{userId}' and postID='{args["args"]["postId"]}'").fetchall()
+
+    extraInfo = "You don't have access to the extra info for this post, but you can buy access for only £1!"
+
+    if len(extraInfoList):
+        extraInfo = database.execute(f"select extraInfo from posts where postID='{args["args"]["postId"]}'").fetchall()[0][0]
+
+    return flask.Response(extraInfo, status=200)
