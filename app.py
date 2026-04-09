@@ -3,6 +3,7 @@ import flask
 app = flask.Flask(__name__)
 
 import api
+import api._databaseConnection
 import json
 
 # function for getting a file, this way any file that exists in the /pages/
@@ -60,6 +61,33 @@ def servePage(path):
         # /api with no further details
         if len(splitPath) == 1:
             return flask.Response("please use an endpoint", status=404)
+
+        # if a page starts with "admin" then only an administrator account can access it
+        if splitPath[1].startswith("admin"):
+            if "authToken" not in flask.request.cookies:
+                return flask.Response("please sign in", 400)
+
+            authToken = flask.request.cookies["authToken"]
+
+            userIdList = api._databaseConnection.database.execute(f"select userID from authTokens where authTokenString='{authToken}'").fetchall()
+
+            if len(userIdList) == 0:
+                return flask.Response("invalid auth token", 401)
+
+            userId = userIdList[0][0]
+
+            adminValueList = api._databaseConnection.database.execute(f"select admin from users where userID='{userId}'").fetchall()
+
+            if len(adminValueList) == 0:
+                # this *shouldnt* be reachable but have it to fail safely
+                return flask.Response("server error", 500)
+
+            adminValue = adminValueList[0][0]
+
+            if adminValue == 0:
+                return flask.Response("you must be an admin to do that", 403)
+
+            # if 1, deliberately fall through to the rest of the api handler
 
         # if the requested endpoint exists
         if splitPath[1] in api.endpoints:
