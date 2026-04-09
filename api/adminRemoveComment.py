@@ -13,4 +13,6 @@ def call(args):
     if "removalReason" not in args["args"]:
         return flask.Response("no reason", 400)
 
-    return flask.Response(status=501)
+    database.execute(f"delete from comments where commentID='{args["args"]["commentId"]}'")
+
+    return flask.Response(status=200)

@@ -15,4 +15,4 @@ def call(args):
 
     connection.commit()
 
-    return flask.Response(status=501)
+    return flask.Response(status=200)
