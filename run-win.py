@@ -3,8 +3,7 @@ import os
 import multiprocessing
 
 paymentServerString = sys.executable + " -m flask --app pretendExternal/paymentProcessor run -p 3001"
-
-mainServerString = sys.executable + " -m flask run -p 5000 --debug"
+mainServerString = sys.executable + " -m flask run -p 3000 --debug"
 
 def run(string):
     os.system(string)
