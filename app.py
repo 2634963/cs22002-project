@@ -46,7 +46,7 @@ def servePage(path):
 
     # dont currently have a favicon
     if (path == "./favicon.ico") or (path == "favicon.ico"):
-        return flask.Response(status=404)
+        return flask.Response("no favicon yet", status=404)
 
     # api calls are handled separately to pages
     if path.split("/")[0] == "api":
@@ -54,7 +54,7 @@ def servePage(path):
 
         # /api with no further details
         if len(splitPath) == 1:
-            return flask.Response(status=404)
+            return flask.Response("please use an endpoint", status=404)
 
         # if the requested endpoint exists
         if splitPath[1] in api.endpoints:
