@@ -1,4 +1,4 @@
-// login script for admin login page
+// login script for login page
 
 console.log("Login script loaded");
 
@@ -41,3 +41,5 @@ loginForm.addEventListener('submit', async function(event) {
         window.location.href = "/pages/admin/adminDashboard.html";
     }
 });
+
+
