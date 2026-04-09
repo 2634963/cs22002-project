@@ -6,8 +6,34 @@ import api
 import api._databaseConnection
 import json
 
+def userIsAdmin():
+    if "authToken" not in flask.request.cookies:
+        return False
+
+    authToken = flask.request.cookies["authToken"]
+
+    userIdList = api._databaseConnection.database.execute(f"select userID from authTokens where authTokenString='{authToken}'").fetchall()
+
+    if len(userIdList) == 0:
+        return False
+
+    userId = userIdList[0][0]
+
+    adminValueList = api._databaseConnection.database.execute(f"select admin from users where userID='{userId}'").fetchall()
+
+    if len(adminValueList) == 0:
+        # this *shouldnt* be reachable but have it to fail safely
+        return False
+
+    adminValue = adminValueList[0][0]
+
+    if adminValue == 0:
+        return False
+
+    return True
+
 # function for getting a file, this way any file that exists in the /pages/
-def getFile(filePath: str) -> str:
+def getFile(filePath: str) -> (str | None):
     if filePath.startswith("/"):
         filePath = "." + filePath
 
@@ -26,12 +52,12 @@ def getFile(filePath: str) -> str:
         print("\n============================================================================\n")
         print(e)
         print("\n============================================================================\n")
-        return ""
+        return None
 
 # this is the function flask calls whenever a request is made
 # it will use the above function to go and find, then serve, any page that exists
-@app.route("/", defaults={"path":""})
-@app.route("/<path:path>", methods=["GET", "POST"])
+@app.route("/", defaults={"path":""}) # type: ignore
+@app.route("/<path:path>", methods=["GET", "POST"]) # type: ignore
 def servePage(path):
     requestArgs = {
         "args":flask.request.args,
@@ -49,10 +75,12 @@ def servePage(path):
     if (path == "./favicon.ico") or (path == "favicon.ico"):
         return flask.Response("no favicon yet", status=404)
 
-    print(path.split("/"))
     # disallow access to root directory
     if len(path.split("/")) == 1:
         return flask.Response("invalid path", 401)
+
+    if path.split("/")[-1].startswith("__"):
+            return flask.Response("no such page", 404)
 
     # api calls are handled separately to pages
     if path.split("/")[0] == "api":
@@ -64,30 +92,8 @@ def servePage(path):
 
         # if a page starts with "admin" then only an administrator account can access it
         if splitPath[1].startswith("admin"):
-            if "authToken" not in flask.request.cookies:
-                return flask.Response("please sign in", 400)
-
-            authToken = flask.request.cookies["authToken"]
-
-            userIdList = api._databaseConnection.database.execute(f"select userID from authTokens where authTokenString='{authToken}'").fetchall()
-
-            if len(userIdList) == 0:
-                return flask.Response("invalid auth token", 401)
-
-            userId = userIdList[0][0]
-
-            adminValueList = api._databaseConnection.database.execute(f"select admin from users where userID='{userId}'").fetchall()
-
-            if len(adminValueList) == 0:
-                # this *shouldnt* be reachable but have it to fail safely
-                return flask.Response("server error", 500)
-
-            adminValue = adminValueList[0][0]
-
-            if adminValue == 0:
+            if not userIsAdmin():
                 return flask.Response("you must be an admin to do that", 403)
-
-            # if 1, deliberately fall through to the rest of the api handler
 
         # if the requested endpoint exists
         if splitPath[1] in api.endpoints:
@@ -98,6 +104,10 @@ def servePage(path):
 
         return flask.Response(status=404)
 
+    if (len(path.split("/")) >= 2) and path.split("/")[1] == "admin":
+        if not userIsAdmin():
+            return flask.Response(getFile("./pages/__adminDenial.html"), 404)
+
     # default media type is html
     mimeType = "text/html"
 
@@ -105,4 +115,12 @@ def servePage(path):
     if path.split(".")[-1] == "css":
         mimeType = "text/css"
 
-    return flask.Response(getFile(path), mimetype=mimeType)
+    if path.split(".")[-1] == "js":
+        mimeType = "text/javascript"
+
+    page = getFile(path)
+
+    if page == None:
+        return flask.Response("no such page", 404)
+
+    return flask.Response(page, mimetype=mimeType)

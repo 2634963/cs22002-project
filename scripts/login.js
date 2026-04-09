@@ -21,8 +21,8 @@ loginForm.addEventListener('submit', async function(event) {
         },
 
         method: "POST",
-        body: JSON.stringify({username: usernameInput,
-                              password: passwordInput})
+        body: JSON.stringify({username: username,
+                              password: password})
     });
 
     if(!(await loginResponse.ok)) {
@@ -41,5 +41,3 @@ loginForm.addEventListener('submit', async function(event) {
         window.location.href = "/pages/admin/adminDashboard.html";
     }
 });
-
-
