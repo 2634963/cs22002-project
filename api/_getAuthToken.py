@@ -2,8 +2,6 @@ import secrets
 from api._databaseConnection import database
 import time
 
-print(__file__ + " has nothing to do with the database and must be updated")
-
 # THIS ASSUMES THAT THE SIGN IN WAS SUCCESSFUL
 def makeAuthToken(userID):
     tokenString = ""

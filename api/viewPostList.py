@@ -3,10 +3,8 @@ from api._databaseConnection import database
 import json
 import flask
 
-print(__file__ + " has nothing to do with the database and must be updated")
-
 def call(args):
-    postList = database.execute("select * from posts where approved=0").fetchall()
+    postList = database.execute("select * from posts where approved=1").fetchall()
     print(postList)
 
     postDict = {}

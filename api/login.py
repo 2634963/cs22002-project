@@ -4,8 +4,6 @@ from api._passwordHashes import verifyPassword
 
 import flask
 
-print(__file__ + " has nothing to do with the database and must be updated")
-
 def call(args):
     if "username" not in args["args"]:
         return flask.Response("no username", 400)
