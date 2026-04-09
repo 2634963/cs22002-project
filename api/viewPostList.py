@@ -1,14 +1,17 @@
 from api._databaseConnection import database
 
+import json
 import flask
 
 print(__file__ + " has nothing to do with the database and must be updated")
 
 def call(args):
-    if "from" not in args["args"]:
-        return flask.Response("no from", 400)
+    postList = database.execute("select * from posts where approved=0").fetchall()
+    print(postList)
 
-    if "to" not in args["args"]:
-        return flask.Response("no to", 400)
+    postDict = {}
 
-    return flask.Response(status=501)
+    for post in postList:
+        postDict[str(post[0])] = {"posterID":post[1], "title":post[2], "content":post[3]}
+
+    return flask.Response(json.dumps(postDict), status=200)
