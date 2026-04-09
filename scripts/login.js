@@ -27,17 +27,11 @@ loginForm.addEventListener('submit', async function(event) {
 
     if(!(await loginResponse.ok)) {
         // Login details were incorrect, error
-        document.getElementById('error').textContent = "Invalid username or password.";
+        document.getElementById('error').textContent = "Error: " + await loginResponse.text();
     }
     else {
+        // Send user to the main page
         console.log("Login successful");
-
-        let loginResponseText = await loginResponse.text();
-
-        // Store session token in a cookie
-        document.cookie = "sessionToken=" + loginResponseText;
-
-        // Load admin dashboard
-        window.location.href = "/pages/admin/adminDashboard.html";
+        window.location.href = "/pages/main.html";
     }
 });
