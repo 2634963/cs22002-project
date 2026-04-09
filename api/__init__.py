@@ -2,12 +2,11 @@
 import api.login                    as login
 import api.log                      as log
 import api.createPost               as createPost
-import api.setPostApproval          as setPostApproval
+import api.adminSetPostApproval     as adminSetPostApproval
 import api.viewPostList             as viewPostList
 import api.postComment              as postComment
 import api.adminRemoveComment       as adminRemoveComment
 import api.adminRemovePost          as adminRemovePost
-import api.userRemoveComment        as userRemoveComment
 import api.viewPostWithComments     as viewPostWithComments
 import api.getExtraInformation      as getExtraInformation
 import api.adminGiveCommentApproval as adminGiveCommentApproval
@@ -36,10 +35,10 @@ endpoints = {
         "module":createPost
     },
 
-    "setPostApproval":{
+    "adminSetPostApproval":{
         #            string    bool
         "requires":["postId", "approved"],
-        "module":setPostApproval
+        "module":adminSetPostApproval
     },
 
     "adminGiveCommentApproval":{
@@ -70,12 +69,6 @@ endpoints = {
         #            string    string
         "requires":["postId", "removalReason"],
         "module":adminRemovePost
-    },
-
-    "userRemoveComment":{
-        #            string
-        "requires":["commentId"],
-        "module":userRemoveComment
     },
 
     "viewPostWithComments":{
