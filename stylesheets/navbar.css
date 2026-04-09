@@ -6,32 +6,32 @@
     font-family: 'Trebuchet MS', sans-serif;
 
     ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    background-color: palegreen;
-    display: flex;
-    top: 0;
-    left: 0;
-    width: 100%;
-    position: fixed;
-    justify-content: center;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        background-color: palegreen;
+        display: flex;
+        top: 0;
+        left: 0;
+        width: 100%;
+        position: fixed;
+        justify-content: center;
     }
 
     ul li a {
-    display: block;
-    color: white;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        color: black;
     }
 
     ul li a:hover {
-    background-color: darkseagreen;
+        background-color: darkseagreen;
     }
 
 }
-
 
 body.dark-mode {
     background-color: #333;

@@ -12,14 +12,11 @@ postForm.addEventListener('submit', function(event) {
     //console log
     console.log('Title:' + title + ' content: ' + content);
 
-    //turn message to varaible
+    //turn message to variable
     const contents = 'New post created with title: ' + title + ' and content: ' + content;
 
     //transmit to api
-    fetch('/api/log?message= MIRDER' + encodeURIComponent(contents))
+    fetch('/api/log?message=' + encodeURIComponent(contents))
     .catch(error => console.error(error));
 
 });
-
-
-
