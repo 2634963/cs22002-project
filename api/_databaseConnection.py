@@ -2,10 +2,12 @@
 import sqlite3
 import json
 
+from api._passwordHashes import hashPassword
+
 #connect to database
 def connectDb():
     try:
-        connection = sqlite3.connect("./fessUpDatabase.db")
+        connection = sqlite3.connect("./fessUpDatabase.db", check_same_thread=False)
         database = connection.cursor()
         print("COnected Database")
         return database, connection
@@ -33,11 +35,17 @@ def createCommentTable(database, connection):
     database.execute(createTable)
     connection.commit()
 
+def createAuthTokenTable(database, connection):
+    createTable = 'CREATE TABLE IF NOT EXISTS authTokens (authTokenString TEXT NOT NULL PRIMARY KEY, createdTimestamp INTEGER NOT NULL, userID INTEGER NOT NULL, FOREIGN KEY(userID) REFERENCES users(userID))'
+    database.execute(createTable)
+    connection.commit()
+
 def createTables(database, connection):
     createPostTable(database, connection)
     createUserTable(database, connection)
     createExtraInfoAccessTable(database, connection)
     createCommentTable(database, connection)
+    createAuthTokenTable(database, connection)
     print("Tables Create / Exist")
 
 #load datga fucntionss
@@ -58,9 +66,9 @@ def loadUserData(database, connection):
     with open("./api/jsons/userData.json", "r") as data:
         users = json.load(data)
         for user in users:
-            database.execute(f"SELECT EXISTS(SELECT 1 FROM users WHERE userID={user["userID"]})")
+            database.execute(f"SELECT EXISTS(SELECT 1 FROM users WHERE userID={user['userID']})")
             if database.fetchone()[0] == 0:
-                database.execute(f"INSERT INTO users (userID, username, password, admin) VALUES ('{user["userID"]}', '{user["username"]}', '{user["password"]}', '{user["admin"]}')")
+                database.execute(f"INSERT INTO users (userID, username, password, admin) VALUES ('{user["userID"]}', '{user["username"].lower()}', \"{hashPassword(user["password"])}\", '{user["admin"]}')")
                 print("user inserted")
             else:
                 print(f"User with ID {user['userID']} already exists")
@@ -74,7 +82,7 @@ def loadCommentData(database, connection):
             print(comment)
             database.execute(f"SELECT EXISTS(SELECT 1 FROM comments WHERE commentID='{comment["commentID"]}')")
             if database.fetchone()[0] == 0:
-                database.execute(f"INSERT INTO comments (postID, content, approved) VALUES ('{comment["commentID"]}', '{comment["content"]}', '{comment["approved"]}')")
+                database.execute(f"INSERT INTO comments (postID, content, approved, commentID) VALUES ('{comment["postID"]}', '{comment["content"]}', '{comment["approved"]}', '{comment["commentID"]}')")
                 print("comment inserted")
             else:
                 print(f"Comment with ID {comment['commentID']} already exists")

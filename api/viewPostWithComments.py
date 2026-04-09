@@ -1,6 +1,7 @@
 from api._databaseConnection import database
 
 import flask
+import json
 
 print(__file__ + " has nothing to do with the database and must be updated")
 
@@ -8,10 +9,11 @@ def call(args):
     if "postId" not in args["args"]:
         return flask.Response("no post id", 400)
 
-    if "startIndex" not in args["args"]:
-        return flask.Response("no start index", 400)
+    commentList = database.execute(f"select * from comments where postID='{args["args"]["postId"]}' and approved=1").fetchall()
 
-    if "endIndex" not in args["args"]:
-        return flask.Response("no end index", 400)
+    commentDict = {}
 
-    return flask.Response(status=501)
+    for comment in commentList:
+        commentDict[str(comment[0])] = {"content":comment[2]}
+
+    return flask.Response(json.dumps(commentDict), status=200)

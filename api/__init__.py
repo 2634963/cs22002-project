@@ -1,18 +1,19 @@
 # import every api endpoint file
 import api.makePayment              as makePayment
-import api.login             as login
+import api.login                    as login
 import api.log                      as log
 import api.createPost               as createPost
-import api.setPostApproval    as setPostApproval
-import api.viewPostList                  as viewPostList
+import api.setPostApproval          as setPostApproval
+import api.viewPostList             as viewPostList
 import api.postComment              as postComment
 import api.adminRemoveComment       as adminRemoveComment
 import api.adminRemovePost          as adminRemovePost
 import api.userRemoveComment        as userRemoveComment
-import api.viewPostWithComments              as viewPostWithComments
-import api.getExtraInformation             as getExtraInformation
+import api.viewPostWithComments     as viewPostWithComments
+import api.getExtraInformation      as getExtraInformation
 import api.adminGiveCommentApproval as adminGiveCommentApproval
-import api.signup            as signup
+import api.signup                   as signup
+import api.getUsernameFromUserId    as getUsernameFromUserId
 
 # a list of every endpoint that should be accessible to an end user
 # an api function that isnt in this dict can still be called from other python files but will not be accessoible from /api/<endpoint>
@@ -99,5 +100,10 @@ endpoints = {
         #
         "requires":["username", "password"],
         "module":signup
+    },
+
+    "getUsernameFromUserId":{
+        "requires":["userId"],
+        "module":getUsernameFromUserId
     }
 }
