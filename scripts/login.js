@@ -2,32 +2,42 @@
 
 console.log("Login script loaded");
 
-//connect to james api
-fetch('http://127.0.0.1:5500/api/log?message=hello');
-
 const loginForm = document.getElementById('login-form');
 const usernameInput = document.getElementById('username');
 const passwordInput = document.getElementById('password');
 
-//check against backend (eventually)
-loginForm.addEventListener('submit', function(event) {
+loginForm.addEventListener('submit', async function(event) {
     event.preventDefault();
     const username = usernameInput.value;
     const password = passwordInput.value;
 
-    console.log('Username:', username);
-    console.log('Password:', password);
+    // Send login details to backend and store the response
+    let loginResponseText = "";
+    
+    const loginResponse = await fetch("/api/login", {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
 
-    window.location.href = "/pages/admin/adminDashboard.html";
+        method: "POST",
+        body: JSON.stringify({username: usernameInput,
+                              password: passwordInput})
+    });
+
+    if(!(await loginResponse.ok)) {
+        // Login details were incorrect, error
+        document.getElementById('error').textContent = "Invalid username or password.";
+    }
+    else {
+        console.log("Login successful");
+
+        let loginResponseText = await loginResponse.text();
+
+        // Store session token in a cookie
+        document.cookie = "sessionToken=" + loginResponseText;
+
+        // Load admin dashboard
+        window.location.href = "/pages/admin/adminDashboard.html";
+    }
 });
-
-//create login function
-function login() {
-    const username = usernameInput.value;
-    const password = passwordInput.value;
-
-    console.log('Username:', username);
-    console.log('Password:', password);
-
-    window.location.href = "/pages/admin/adminDashboard.html";
-}
