@@ -1,6 +1,7 @@
 [{
     "postID":0,
     "commentID": 0,
+    "authorUserID":0,
     "content": "Here is the finest comment section",
     "approved": 0
 }]

@@ -31,7 +31,7 @@ def createExtraInfoAccessTable(database, connection):
     connection.commit()
 
 def createCommentTable(database, connection):
-    createTable = 'CREATE TABLE IF NOT EXISTS comments (commentID INTEGER NOT NULL PRIMARY KEY, postID INTEGER NOT NULL, content TEXT NOT NULL, approved INTEGER NOT NULL, FOREIGN KEY(postID) REFERENCES posts(postID))'
+    createTable = 'CREATE TABLE IF NOT EXISTS comments (commentID INTEGER NOT NULL PRIMARY KEY, authorUserID INTEGER NOT NULL, postID INTEGER NOT NULL, content TEXT NOT NULL, approved INTEGER NOT NULL, FOREIGN KEY(postID) REFERENCES posts(postID))'
     database.execute(createTable)
     connection.commit()
 
@@ -55,7 +55,7 @@ def loadPostData(database, connection):
         for post in posts:
             database.execute("SELECT EXISTS(SELECT 1 FROM posts WHERE postID=?)", (post["postID"]))
             if database.fetchone()[0] == 0:
-                database.execute("INSERT INTO posts (postID, posterID, title, content, extraInfo, approved) VALUES (?, ?, ?, ?, ?, ?)", (post["postID"], post["posterID"], post["title"], post["content"], post["extraInfo"], post["approved"]))
+                database.execute(f"INSERT INTO posts (postID, posterID, title, content, extraInfo, approved) VALUES ('{post["postID"]}', '{post["posterID"]}', '{post["title"]}', '{post["content"]}', '{post["extraInfo"]}', '{post["approved"]}')")
                 print("post inserted")
             else:
                 print(f"Post with ID {post['postID']} already exists")
@@ -82,7 +82,7 @@ def loadCommentData(database, connection):
             print(comment)
             database.execute(f"SELECT EXISTS(SELECT 1 FROM comments WHERE commentID='{comment["commentID"]}')")
             if database.fetchone()[0] == 0:
-                database.execute(f"INSERT INTO comments (postID, content, approved, commentID) VALUES ('{comment["postID"]}', '{comment["content"]}', '{comment["approved"]}', '{comment["commentID"]}')")
+                database.execute(f"INSERT INTO comments (postID, authorUserID, content, approved, commentID) VALUES ('{comment["postID"]}', '{comment["authorUserID"]}', '{comment["content"]}', '{comment["approved"]}', '{comment["commentID"]}')")
                 print("comment inserted")
             else:
                 print(f"Comment with ID {comment['commentID']} already exists")

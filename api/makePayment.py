@@ -1,7 +1,5 @@
 from api._databaseConnection import database
 
-print(__file__ + " has nothing to do with the database and must be updated")
-
 import requests
 import flask
 
@@ -25,7 +23,7 @@ def call(args):
         return flask.Response("no payment amount", 400)
 
     # every argument exists, make the call to the payment processor
-    response = requests.get(PAYMENT_PROCESSOR_URL, {"cardNumber":args["args"]["cardNumber"], "expireMonth":args["args"]["expireMonth"], "expireYear":args["args"]["expireYear"], "ccv":args["args"]["ccv"], "paymentAmountPence":args["args"]["paymentAmountPence"]})
+    response = requests.get(PAYMENT_PROCESSOR_URL, {"cardNumber":args["args"]["cardNumber"], "expireMonth":args["args"]["expireMonth"], "expireYear":args["args"]["expireYear"], "ccv":args["args"]["ccv"], "paymentAmountPence":args["args"]["paymentAmountPence"]}, timeout=5)
 
     # and return what it said
-    return flask.Response(status=200) if (200 <= response.status_code < 300) else flask.Response(status=400)
+    return 200 if (200 <= response.status_code < 300) else 400

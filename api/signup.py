@@ -26,7 +26,7 @@ def call(args):
         if '0' <= char <= '9':
             continue
 
-        return flask.Response("invalid character in username: > " + char, 400)
+        return flask.Response("invalid character in username: " + char, 400)
 
     print(database.execute("select * from users").fetchall())
 
