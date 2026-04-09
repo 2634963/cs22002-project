@@ -11,4 +11,4 @@ def call(args):
     if "password" not in args["args"]:
         return flask.Response("no password", 400)
 
-    return flask.Response("this is some data that is the body of the response please treat it very carefully", 200)
+    return flask.Response("this is some data that is the body of the response please treat it very carefully", 501)
