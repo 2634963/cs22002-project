@@ -11,4 +11,4 @@ def call(args):
     if "content" not in args["args"]:
         return flask.Response("no content", 400)
 
-    return flask.Response(status=200)
+    return flask.Response(status=501)

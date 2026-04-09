@@ -29,18 +29,4 @@ def call(args):
 
         return flask.Response("invalid character in username: > " + char, 400)
 
-    # this is required
-    # for some reason
-    # dont know what it does
-    # dont know how it works
-    # just know that it works
-    while database.nextset():
-        continue
-
-    query = "SELECT * FROM user WHERE username= %s"
-    database.execute(query, (args["args"]["username"],))
-
-    for thing in database:
-        print("==========================================", thing)
-
-    return flask.Response(status=200)
+    return flask.Response(status=501)
