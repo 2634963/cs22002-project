@@ -2,7 +2,7 @@
 
 // Sign up script for login page
 
-console.log("sing up script loaded");
+console.log("signup script loaded");
 
 const loginForm = document.getElementById('signup-form');
 const usernameInput = document.getElementById('username');
@@ -15,28 +15,26 @@ loginForm.addEventListener('submit', async function(event) {
 
     // Send sign up details to backend and store the response
     let signUpResponseText = "";
-    
-    const signupResponse = await fetch("/api/signup.py", {
+
+    const signupResponse = await fetch("/api/signup", {
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
 
         method: "POST",
-        body: JSON.stringify({username: usernameInput,
-                              password: passwordInput})
+        body: JSON.stringify({username: username,
+                              password: password})
     });
 
     if(!(await signupResponse.ok)) {
         // sign up details were already exist
-        document.getElementById('error').textContent = " username already exists";
+        document.getElementById('error').textContent = "Error: " + await signupResponse.text();
     }
     else {
-        console.log("Sign Up successful");
-
-        let signUpResponseText = await signupResponse.text();
-
-        const element = document.getElelmentById('signup-id');
-        element.remove();
+        // Inform the user that they were successfully registered
+        console.log("Signup successful");
+        document.getElementById('error').textContent = "";
+        document.getElementById('success').textContent = "Signup successful!";
     }
 });
