@@ -41,3 +41,5 @@ loginForm.addEventListener('submit', async function(event) {
         window.location.href = "/pages/admin/adminDashboard.html";
     }
 });
+
+

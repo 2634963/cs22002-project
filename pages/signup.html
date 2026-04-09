@@ -1,3 +1,5 @@
+<!-- sign up page, accesed through loigin.html -->
+
 <!-- Login Page for fess up-->
 <!DOCTYPE html>
 <html lang="en">
@@ -6,7 +8,7 @@
         <!-- Links to Styles sheet -->
         <link rel="stylesheet" href="/stylesheets/loginStyles.css">
 
-        <script src="/scripts/login.js" defer></script>
+        <script src="/scripts/signup.js" defer></script>
         
         <title>FessUp</title>
     </head>
@@ -15,9 +17,9 @@
         <span id="navbar"></span>
         <script src="/scripts/include.js" onload="includeHTML('/pages/navbar.html', 'navbar')"></script>
 
-        <h1>Login</h1>
+        <h1>Sign Up to Fess Up!</h1>
 
-        <!-- LOGIN FORM IMPORTANT NEED SCRIPTS REALLY IMPORTANT -->
+        <!-- sign up form -->
         <div class="login-container">
             <p id="error"></p>
 
@@ -32,9 +34,9 @@
                     <input type="password" id="password" name="password" required>
                 </div>
 
-                <button type="submit" id="login">Login</button>
+                <button type="submit" id="login">Sign Up!</button>
 
-                <button onclick="location.href='/pages/signup.html'" id="signUp">Go to Sign Up!</button>
+                <button onclick="location.href='/pages/login.html'" id = "login">Back to Login</button>
             </form>
         </div>
 
