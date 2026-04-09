@@ -1,8 +1,10 @@
-# FessUp
+# FessUp Internal Documentation
 
 ## Database
 
-The database used for this project is a MySQL database with four tables: User, Post, Comment, and ExtraInfoAccess.
+The database used for this project is an SQLite database with four tables: User, Post, Comment, and ExtraInfoAccess.
+
+Originally, MySQL was the database software which was going to be used. However, we found that using SQLite, which is built into Python, massively simplifies deployment, backups, etc.
 
 The schema is shown below:
 
