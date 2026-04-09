@@ -1,4 +1,4 @@
-from api._databaseConnection import database
+from api._databaseConnection import database, connection
 from api._getAuthToken import verifyAuthToken
 
 import flask
@@ -22,5 +22,7 @@ def call(args):
     commentId = database.execute("select count(*) from comments").fetchall()[0][0]
 
     database.execute(f"INSERT INTO comments (postID, content, approved, commentID) VALUES ('{args["args"]["postId"]}', '{args["args"]["content"]}', '0', '{commentId}')")
+
+    connection.commit()
 
     return flask.Response("success", status=200)

@@ -1,4 +1,4 @@
-from api._databaseConnection import database
+from api._databaseConnection import database, connection
 
 import flask
 
@@ -20,5 +20,7 @@ def call(args):
     posterId = database.execute(f"select userID from authTokens where authTokenString='{args["cookies"]["authToken"]}'").fetchall()[0][0]
 
     database.execute(f"insert into posts (postID, posterID, title, content, extraInfo, approved) values ('{postId}', '{posterId}', '{args["args"]["title"]}', '{args["args"]["content"]}', '{args["args"]["extraInfo"]}', '0')")
+
+    connection.commit()
 
     return flask.Response("success", status=200)

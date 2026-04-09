@@ -48,6 +48,11 @@ def servePage(path):
     if (path == "./favicon.ico") or (path == "favicon.ico"):
         return flask.Response("no favicon yet", status=404)
 
+    print(path.split("/"))
+    # disallow access to root directory
+    if len(path.split("/")) == 1:
+        return flask.Response("invalid path", 401)
+
     # api calls are handled separately to pages
     if path.split("/")[0] == "api":
         splitPath = path.split("/")
