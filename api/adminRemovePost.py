@@ -2,8 +2,6 @@ from api._databaseConnection import database
 
 import flask
 
-print(__file__ + " has nothing to do with the database and must be updated")
-
 # this endpoint is for admins removing a post for a reason that they may give
 
 def call(args):
@@ -12,5 +10,7 @@ def call(args):
 
     if "reason" not in args["args"]:
         return flask.Response("no reason", 400)
+
+    database.execute(f"delete from posts where postId='{args["args"]["postId"]}'")
 
     return flask.Response(status=501)
