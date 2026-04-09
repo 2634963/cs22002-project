@@ -1,4 +1,4 @@
-from api._databaseConnection import database
+from api._databaseConnection import database, connection
 
 import flask
 
@@ -14,5 +14,7 @@ def call(args):
         return flask.Response("no reason", 400)
 
     database.execute(f"delete from comments where commentID='{args["args"]["commentId"]}'")
+
+    connection.commit()
 
     return flask.Response(status=200)
