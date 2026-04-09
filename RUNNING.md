@@ -25,7 +25,7 @@ To run the project in a Docker container, run the following commands in the root
 
 ```bash
 docker build -f Dockerfile -t cs22002-project .
-docker run -p 3000:3000 cs22002-project
+docker run --network=host -p 3000:3000 cs22002-project
 ```
 
 #### Podman
@@ -34,7 +34,7 @@ To run the project in a Podman container, run the following commands in the root
 
 ```bash
 podman build -f Dockerfile -t cs22002-project .
-podman run -p 3000:3000 cs22002-project
+podman run --network=host -p 3000:3000 cs22002-project
 ```
 
 ### Standalone
