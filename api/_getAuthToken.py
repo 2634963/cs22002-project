@@ -1,5 +1,5 @@
 import secrets
-from api._databaseConnection import database
+from api._databaseConnection import database, connection
 import time
 
 # THIS ASSUMES THAT THE SIGN IN WAS SUCCESSFUL
@@ -10,6 +10,8 @@ def makeAuthToken(userID):
         tokenString += chr(ord('a') + secrets.SystemRandom().randint(0, 25))
 
     database.execute(f"insert into authTokens (authTokenString, userID, createdTimestamp) values ('{tokenString}', '{userID}', '{int(time.time())}')")
+
+    connection.commit()
 
     return tokenString
 
@@ -27,3 +29,4 @@ def verifyAuthToken(authToken):
 
 def deleteAuthToken(authToken):
     database.execute(f"delete from authTokens where authTokenString='{authToken}'")
+    connection.commit()
