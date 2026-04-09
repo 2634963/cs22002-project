@@ -58,9 +58,9 @@ def loadUserData(database, connection):
     with open("./api/jsons/userData.json", "r") as data:
         users = json.load(data)
         for user in users:
-            database.execute("SELECT EXISTS(SELECT 1 FROM users WHERE userID=?)", (user["userID"]))
+            database.execute(f"SELECT EXISTS(SELECT 1 FROM users WHERE userID={user["userID"]})")
             if database.fetchone()[0] == 0:
-                database.execute("INSERT INTO users (userID, username, password, admin) VALUES (?, ?, ?, ?)", (id["userID"], user["username"], user["password"], user["admin"]))
+                database.execute(f"INSERT INTO users (userID, username, password, admin) VALUES ('{user["userID"]}', '{user["username"]}', '{user["password"]}', '{user["admin"]}')")
                 print("user inserted")
             else:
                 print(f"User with ID {user['userID']} already exists")
@@ -71,9 +71,10 @@ def loadCommentData(database, connection):
     with open("./api/jsons/commentData.json", "r") as data:
         comments = json.load(data)
         for comment in comments:
-            database.execute("SELECT EXISTS(SELECT 1 FROM comments WHERE commentID=?)", (comment["commentID"]))
+            print(comment)
+            database.execute(f"SELECT EXISTS(SELECT 1 FROM comments WHERE commentID='{comment["commentID"]}')")
             if database.fetchone()[0] == 0:
-                database.execute("INSERT INTO comments (postID, content, approved) VALUES (?, ?, ?)", (comment["postID"], comment["content"], comment["approved"]))
+                database.execute(f"INSERT INTO comments (postID, content, approved) VALUES ('{comment["commentID"]}', '{comment["content"]}', '{comment["approved"]}')")
                 print("comment inserted")
             else:
                 print(f"Comment with ID {comment['commentID']} already exists")
@@ -84,9 +85,9 @@ def loadExtraInfoData(database, connection):
     with open("./api/jsons/extraInfoData.json", "r") as data:
         extraInfo = json.load(data)
         for info in extraInfo:
-            database.execute("SELECT EXISTS(SELECT 1 FROM extraInfoAccess WHERE paymentID=?)", (info["paymentID"]))
+            database.execute(f"SELECT EXISTS(SELECT 1 FROM extraInfoAccess WHERE paymentID={info["paymentID"]})")
             if database.fetchone()[0] == 0:
-                database.execute("INSERT INTO extraInfoAccess (paymentID, userID, postID) VALUES (?, ?, ?)", (info["paymentID"], info["userID"], info["postID"]))
+                database.execute(f"INSERT INTO extraInfoAccess (paymentID, userID, postID) VALUES ('{info["paymentID"]}', '{info["userID"]}', '{info["postID"]}')")
                 print("extra info access inserted")
             else:
                 print(f"Extra info access with ID {info['paymentID']} already exists")
