@@ -11,9 +11,6 @@ loginForm.addEventListener('submit', async function(event) {
     const username = usernameInput.value;
     const password = passwordInput.value;
 
-    console.log('Username:', username);
-    console.log('Password:', password);
-
     // Send login details to backend and store the response
     let loginResponseText = "";
     
@@ -22,19 +19,21 @@ loginForm.addEventListener('submit', async function(event) {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
-        
+
         method: "POST",
         body: JSON.stringify({username: usernameInput,
                               password: passwordInput})
-    })
-          .then(response => response.text())
-          .then(text => loginResponseText = text);
+    });
 
-    if(!loginResponse.ok) {
+    if(!(await loginResponse.ok)) {
         // Login details were incorrect, error
         document.getElementById('error').textContent = "Invalid username or password.";
     }
     else {
+        console.log("Login successful");
+
+        let loginResponseText = await loginResponse.text();
+
         // Store session token in a cookie
         document.cookie = "sessionToken=" + loginResponseText;
 

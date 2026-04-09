@@ -1,14 +1,15 @@
 // Include HTML code within a specific element
 async function includeHTML(sourceFile, destElementId) {
     // Load the HTML to insert
-    let includeText = "";
+    const includeResponse = await fetch(sourceFile);
 
-    const includeResponse = await fetch(sourceFile)
-          .then(response => response.text())
-          .then(text => {
-              includeText = text
-          });
+    // Error out if we couldn't load it
+    if(!(await includeResponse.ok))
+    {
+        console.log("Error: failed to load HTML from '" + sourceFile + "'");
+        return;
+    }
 
     // Insert the HTML into the destination element
-    document.getElementById(destElementId).innerHTML = includeText;
+    document.getElementById(destElementId).innerHTML = await includeResponse.text();
 }
