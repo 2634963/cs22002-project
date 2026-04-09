@@ -7,7 +7,7 @@ import api._databaseConnection
 import json
 
 # function for getting a file, this way any file that exists in the /pages/
-def getFile(filePath: str) -> str:
+def getFile(filePath: str) -> (str | None):
     if filePath.startswith("/"):
         filePath = "." + filePath
 
@@ -26,7 +26,7 @@ def getFile(filePath: str) -> str:
         print("\n============================================================================\n")
         print(e)
         print("\n============================================================================\n")
-        return ""
+        return None
 
 # this is the function flask calls whenever a request is made
 # it will use the above function to go and find, then serve, any page that exists
@@ -49,10 +49,12 @@ def servePage(path):
     if (path == "./favicon.ico") or (path == "favicon.ico"):
         return flask.Response("no favicon yet", status=404)
 
-    print(path.split("/"))
     # disallow access to root directory
     if len(path.split("/")) == 1:
         return flask.Response("invalid path", 401)
+
+    if path.split("/")[-1].startswith("__"):
+            return flask.Response("no such page", 404)
 
     # api calls are handled separately to pages
     if path.split("/")[0] == "api":
@@ -105,4 +107,12 @@ def servePage(path):
     if path.split(".")[-1] == "css":
         mimeType = "text/css"
 
-    return flask.Response(getFile(path), mimetype=mimeType)
+    if path.split(".")[-1] == "js":
+        mimeType = "text/javascript"
+
+    page = getFile(path)
+
+    if page == None:
+        return flask.Response("no such page", 404)
+
+    return flask.Response(page, mimetype=mimeType)
