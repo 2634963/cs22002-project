@@ -13,7 +13,7 @@ The frontend is composed of plain HTML, CSS and Javascript, and is what the user
 
 The backend uses the Flask server software, and its primary job is to respond to API requests, acting as an intermediary between the frontend and the MySQL database, which actually stores all of the data required for the operation of the system.
 
-The database is a traditional relational database running on a MySQL server, and it handles the storage of all of the data used by the system. It contains data on users, posts, and comments.
+The database is a traditional relational database using the SQLite library, and it handles the storage of all of the data used by the system. It contains data on users, posts, and comments.
 
 ## Component Documentation
 
