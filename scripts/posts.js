@@ -134,6 +134,12 @@ async function showComments(id) {
             modal.style.display = "none";
         }
     }
+
+    const commentSubmitButton = document.getElementById("commentSubmitButton");
+    commentSubmitButton.onclick = function() {
+        createPostComment(id);
+    };
+
 }
 
 async function createPostComment(id) {
@@ -146,7 +152,7 @@ async function createPostComment(id) {
 
     console.log(postId);
     console.log(commentText);
-    
+
     //go to back end
     const res = await fetch("/api/postComment?postId=" + postId + "&content=" + encodeURIComponent(commentText));
 
