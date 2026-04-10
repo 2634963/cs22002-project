@@ -163,3 +163,24 @@ async function createPostComment(id) {
     }
 }
 
+// Display comments for approval (admin)
+async function loadCommentsForApproval() {
+    console.log("Loading comments for approval")
+
+    // GET coments
+    const commentsResponse = await fetch("/api/adminViewCommentApprovalList");
+
+    if(!(await commentsResponse.ok)) {
+        // For some reason the endpoint did not succeed, error
+        console.log("Failed to retrieve posts from /adminViewPostApprovalList endpoint");
+    }
+    else {
+        console.log("Got comments from /adminViewPostApprovalList endpoint");
+        const comments = JSON.parse(await postsResponse.text());
+
+        // Display each post
+        for(const [key, comment] of Object.entries(comments)) {
+            displayPost(comment.postId, comment.title, comment.content, true);
+        }
+    }
+}

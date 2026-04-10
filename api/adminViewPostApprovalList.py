@@ -4,6 +4,7 @@ import json
 import flask
 
 def call(args):
+    print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
     postList = database.execute("select * from posts where approved=0").fetchall()
     print(postList)
 
