@@ -2,8 +2,6 @@
 import accountCreationAndSignin
 import adminApprovingComments
 import adminApprovingPosts
-import adminDenyingComments
-import adminDenyingPosts
 import adminGetApprovalList
 import getExtraInformation
 import gettingComments
@@ -52,6 +50,8 @@ print("\n========================================================\n")
 testSuccessDict["getting extra information"] = getExtraInformation.test()
 print("\n========================================================\n")
 testSuccessDict["admin get approval list"] = adminGetApprovalList.test()
+print("\n========================================================\n")
+testSuccessDict["admin approving posts"] = adminApprovingPosts.test()
 
 
 print("\n========================================================\n\n\n")
