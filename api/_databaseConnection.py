@@ -9,10 +9,10 @@ def connectDb():
     try:
         connection = sqlite3.connect("./fessUpDatabase.db", check_same_thread=False)
         database = connection.cursor()
-        print("COnected Database")
+        print("Connected to database")
         return database, connection
     except:
-        print("Failed to connerct")
+        return None
 
 #create table functions
 def createPostTable(database, connection):
@@ -133,9 +133,14 @@ def printJson():
         users = json.load(data)
         for user in users:
             print(user["userID"])
-    
 
-database, connection = connectDb()
+
+conenctionObjects = connectDb()
+if conenctionObjects == None:
+    print("unable to connect to database")
+    exit(-1)
+
+database, connection = conenctionObjects
 
 createTables(database, connection)
 
@@ -144,5 +149,3 @@ print(printJson())
 loadData(database, connection)
 
 displayAllData(database)
-
-#TO DO: ADD QUERIES + CREATE DATA
