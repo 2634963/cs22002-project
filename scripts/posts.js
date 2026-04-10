@@ -1,7 +1,7 @@
 // Script to handle post display
 
 // Display a specific post in the grid
-async function displayPost(id, title, content, extraInfo, approval) {
+async function displayPost(id, title, content, extraInfo, extraInfoPurchased, approval) {
     console.log("Displaying post '" + title + "'");
 
     let card = document.createElement("div");
@@ -17,6 +17,11 @@ async function displayPost(id, title, content, extraInfo, approval) {
 
     card.innerHTML += '<button class="comment-button" onclick="showComments(' + id + ')">Comments</button>';
 
+    if(!extraInfoPurchased)
+    {
+        card.innerHTML += '<button class="comment-button" onclick="showExtraInfoModal(' + id + ')"></button>'
+    }
+    
     // Append onto the grid
     let container = document.getElementById("cardContainer");
     container.appendChild(card);
@@ -41,8 +46,9 @@ async function loadPosts() {
         for(const [key, post] of Object.entries(posts)) {
             // GET extra info, if the user has access
             const extraInfoResponse = await fetch("/api/getExtraInformation?postId=" + post.postId);
+            let extraInfoPurchased = (await extraInfoResponse.ok ? true : false);
 
-            displayPost(post.postId, post.title, post.content, await extraInfoResponse.text(), false);
+            displayPost(post.postId, post.title, post.content, await extraInfoResponse.text(), extraInfoPurchased, false);
         }
     }
 }
@@ -76,7 +82,9 @@ async function loadPostsForApproval() {
 
         // Display each post
         for(const [key, post] of Object.entries(posts)) {
-            displayPost(post.postId, post.title, post.content, true);
+            let extraInfoPurchased = (await extraInfoResponse.ok ? true : false);
+
+            displayPost(post.postId, post.title, post.content, await extraInfoResponse.text(), extraInfoPurchased, true);
         }
     }
 }
@@ -121,6 +129,28 @@ async function showComments(id) {
     }
     
     let modal = document.getElementById("commentModal");
+    let span = document.getElementsByClassName("close")[0];
+
+    modal.style.display = "block";
+
+    if (span) {
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+    }
+
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+}
+
+// Display the purchase modal
+async function showExtraInfoModal(id) {
+    console.log('Purchase model displayed for post ' + id);
+
+    let modal = document.getElementById("extraInfoModal");
     let span = document.getElementsByClassName("close")[0];
 
     modal.style.display = "block";
