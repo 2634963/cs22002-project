@@ -37,19 +37,9 @@ async function loadPosts() {
         console.log("Got posts from /viewPostList endpoint");
         const posts = JSON.parse(await postsResponse.text());
 
-        // Determine post count
-        let postCount = 0;
-
-        for(let i = 0; i < Object.keys(posts).length; i++) {
-            postCount += Object.keys(posts)[i].length;
-        }
-
-        console.log("Post count: " + postCount);
-
         // Display each post
-        for(let i = 0; i < postCount; i++)
-        {
-            displayPost(posts[i].postId, posts[i].title, posts[i].content, false)
+        for(const [key, post] of Object.entries(posts)) {
+            displayPost(post.postId, post.title, post.content, true);
         }
     }
 }
@@ -81,19 +71,9 @@ async function loadPostsForApproval() {
         console.log("Got posts from /adminViewPostApprovalList endpoint");
         const posts = JSON.parse(await postsResponse.text());
 
-        // Determine post count
-        let postCount = 0;
-
-        for(let i = 0; i < Object.keys(posts).length; i++) {
-            postCount += Object.keys(posts)[i].length;
-        }
-
-        console.log("Post count: " + postCount);
-
         // Display each post
-        for(let i = 0; i < postCount; i++)
-        {
-            displayPost(posts[i].postId, posts[i].title, posts[i].content, true)
+        for(const [key, post] of Object.entries(posts)) {
+            displayPost(post.postId, post.title, post.content, true);
         }
     }
 }
