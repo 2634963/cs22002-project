@@ -15,7 +15,7 @@ def call(args):
     if "authToken" not in args["cookies"]:
         return flask.Response("please sign in", 401)
 
-    postId = database.execute("select count(*) from posts").fetchall()[0][0]
+    postId = database.execute("select max(postID) from posts").fetchall()[0][0] + 1
 
     posterId = database.execute(f"select userID from authTokens where authTokenString='{args["cookies"]["authToken"]}'").fetchall()[0][0]
 
