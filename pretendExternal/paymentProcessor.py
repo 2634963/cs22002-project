@@ -45,6 +45,7 @@ def checkExpiry(monthString, yearString):
     return True
 
 def checkCCV(ccvString):
+    # we dont support amex
     if len(ccvString) !=3:
         return False
 
