@@ -48,4 +48,5 @@ testSuccessDict["getting comments"] = gettingComments.test()
 print("\n========================================================\n")
 
 testSuccessDict["purchasing extra information"] = purchaseExtraInformation.test()
-# testSuccessDict["getting extra information"] = getExtraInformation.test()
+print("\n========================================================\n")
+testSuccessDict["getting extra information"] = getExtraInformation.test()

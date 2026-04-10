@@ -24,6 +24,25 @@ def test():
 
     signInCookies = response.cookies
 
+    print("attempting to get extra information without post id")
+    response = requests.post(serverUrl + "/api/getExtraInformation", cookies=signInCookies, json={})
+
+    if response.status_code == 200:
+        print("failed to prevent getting extra information with no post id")
+        testSuccess = False
+    else:
+        print("successfully prevented getting extra information without a post id")
+
+    print("attempting to get extra information normally")
+    response = requests.post(serverUrl + "/api/getExtraInformation", cookies=signInCookies, json={"postId":"1"})
+    if response.status_code == 200:
+        print("successfully got extra information")
+    else:
+        print("failed to get extra information")
+        testSuccess = False
+
+    return testSuccess
+
 
 if __name__ == "__main__":
     import sys
