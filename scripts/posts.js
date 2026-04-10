@@ -134,3 +134,7 @@ async function showComments(id) {
         }
     }
 }
+
+async function createPostComment() {
+    console.log("Create comment button presserd")
+}
