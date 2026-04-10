@@ -22,7 +22,7 @@ def call(args):
     if not verifyAuthToken(args["cookies"]["authToken"]):
         return flask.Response("please sign in", 401)
 
-    postId = database.execute("select max(*) from posts").fetchall()[0][0] + 1
+    postId = database.execute("select max(postID) from posts").fetchall()[0][0] + 1
 
     posterId = database.execute("select userID from authTokens where authTokenString=? ", (args["cookies"]["authToken"],)).fetchall()[0][0]
 
