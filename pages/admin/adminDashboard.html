@@ -2,12 +2,12 @@
 
 <!DOCTYPE html>
 <html lang="en">
-
     <head>
         <!-- Links to Styles sheet -->
         <link rel="stylesheet" href="/stylesheets/adminDashboard.css">
-        
-        <script src="/scripts/approve.js" defer></script>
+        <link rel="stylesheet" href="/stylesheets/postStyles.css">
+
+        <script src="/scripts/posts.js" onload="loadPostsForApproval()" defer></script>
         <title>FessUp - Admin Dashboard</title>
     </head>
 
@@ -17,12 +17,8 @@
 
         <h1>Admin Dashboard</h1>
 
-        <!-- TEMP SPAWN BUTTON -->
-        <button onclick="createApprovalRequest()">Spawn Approval Card</button>
-
         <!-- Create Admin Cards -->
-        <div class="admin-cards" id="cardContainer">
+        <div class="cards" id="cardContainer">
         </div>
     </body>
-    
 </html>

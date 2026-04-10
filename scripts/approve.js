@@ -31,8 +31,7 @@ function createApprovalRequest() {
     card.classList.add("admin-card");
 
     //Creat content for card
-    var cardContent = '<h2>' + postData.title + '</h2> <p>' + postData.content + '</p> <button class="approve-button" id = "approve" onclick="approve(this)">Approve</button> <button class="deny-button" id="deny" onclick="deny(this)">Deny</button> <div class="admin-card-footer">Posted by ID: ' + postData.posterId + '</div>'
-    ;
+    var cardContent = '<h2>' + postData.title + '</h2> <p>' + postData.content + '</p> <button class="approve-button" id = "approve" onclick="approve(this)">Approve</button> <button class="deny-button" id="deny" onclick="deny(this)">Deny</button> <div class="admin-card-footer">Posted by ID: ' + postData.posterId + '</div>';
 
     card.innerHTML = cardContent;
 
