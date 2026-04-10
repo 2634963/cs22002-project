@@ -31,6 +31,7 @@
                 <!-- Comments list -->
                 <h2>Comments</h2>
                 <span id="comments"></span>
+                <input type="hidden" id="commentPostId" value="">
 
                 <!-- commetns div for appending-->
                 <div commentDiv>
@@ -40,7 +41,7 @@
                 <!-- create comment post -->
                 <label for = "commentPoster" style = "text-align: center">Create Comment:</label>
                 <input  type = "text" id ="commentPoster" name = "comments" style = "text-align: center" required>
-                <button type = "submit" id = "commentSubmitButton">Post Comment</button>
+                <button type = "submit" id = "commentSubmitButton" onclick = "createPostComment(this.id)">Post Comment</button>
             </div>
         </div>
     </body>
