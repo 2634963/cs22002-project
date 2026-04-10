@@ -25,6 +25,11 @@ if len(sys.argv) < 2:
 if not sys.argv[1].startswith("http"):
     sys.argv[1] = "http://" + sys.argv[1]
 
+# start up payment server and main server
+import subprocess
+nullFile = open("NUL", "r+")
+subprocess.Popen("flask run -p 3000", stdout=nullFile, stdin=nullFile, stderr=nullFile)
+subprocess.Popen("flask --app ./pretendExternal/paymentProcessor run -p 3001", stdout=nullFile, stderr=nullFile, stdin=nullFile)
 
 if not accountCreationAndSignin.test():
     # cant test without an account
