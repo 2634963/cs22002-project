@@ -5,7 +5,7 @@
         "title": "Welcome to Fessip",
         "content": "Annoumys confesino website",
         "extraInfo": "this is some super secret extra information",
-        "approved": 0
+        "approved": 1
     },
     {
         "postID": "1",
@@ -14,5 +14,21 @@
         "content": "With some fancy content",
         "extraInfo": "And some fancy secret info",
         "approved": 1
+    },
+    {
+        "postID": "2",
+        "posterID": "0",
+        "title": "This is another fancy post",
+        "content": "With some more fancy content",
+        "extraInfo": "And some even more fancy secret info",
+        "approved": 0
+    },
+    {
+        "postID": "3",
+        "posterID": "0",
+        "title": "This is a third fancy post",
+        "content": "With a little bit more fancy content",
+        "extraInfo": "And a tiny bit more fancy secret info",
+        "approved": 0
     }
 ]

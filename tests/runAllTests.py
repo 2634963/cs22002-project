@@ -50,7 +50,10 @@ print("\n========================================================\n")
 testSuccessDict["purchasing extra information"] = purchaseExtraInformation.test()
 print("\n========================================================\n")
 testSuccessDict["getting extra information"] = getExtraInformation.test()
-print("\n========================================================\n\n\n")
+print("\n========================================================\n")
+testSuccessDict["admin get approval list"] = adminGetApprovalList.test()
 
+
+print("\n========================================================\n\n\n")
 for key, value in testSuccessDict.items():
     print(key + ": ", "success" if value else "falied")
