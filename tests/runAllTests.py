@@ -52,6 +52,8 @@ print("\n========================================================\n")
 testSuccessDict["admin get approval list"] = adminGetApprovalList.test()
 print("\n========================================================\n")
 testSuccessDict["admin approving posts"] = adminApprovingPosts.test()
+print("\n========================================================\n")
+testSuccessDict["admin approving comments"] = adminApprovingComments.test()
 
 
 print("\n========================================================\n\n\n")
