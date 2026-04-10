@@ -1,4 +1,8 @@
 def test():
+    import sys
+    import requests
+    serverUrl = sys.argv[1]
+
     response = requests.get(serverUrl + "/api/viewPostList")
 
     if response.status_code != 200:

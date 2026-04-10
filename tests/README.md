@@ -9,6 +9,8 @@ The test for account creation and sign in must be run first, as it creates an ac
 
 ```runAllTests.py``` will do both of these steps for you before starting all tests.
 
+Make sure that all tests are run from the base directory, __NOT__ from /tests/.
+
 ## Running a test
 ### Command syntax:
 ```python <test filename> <address>```
