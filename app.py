@@ -92,7 +92,7 @@ def servePage(path):
             return flask.Response(getFile("./pages/__adminDenial.html"), 404)
 
         # If a non logged-in user attempts to access anything, redirect them to login
-        elif (path == "pages/post.html" or path == "pages/main.html") and not isLoggedIn():
+        elif (path == "pages/post.html") and not isLoggedIn():
             return flask.Response(getFile("./pages/login.html"), 401)
 
         # dont currently have a favicon
