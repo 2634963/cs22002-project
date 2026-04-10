@@ -15,13 +15,15 @@ def call(args):
 
     userId = database.execute("select userID from authTokens where authTokenString=? ", (args["cookies"]["authToken"],)).fetchall()[0][0]
 
+    isAdmin = database.execute("select admin from users where userID=?", (userId,)).fetchall()[0][0] == 1
+
     extraInfoList = database.execute("select * from extraInfoAccess where userID=? and postID=? ", (userId, args["args"]["postId"])).fetchall()
 
     extraInfo = "You don't have access to the extra info for this post, but you can buy access for only £1!"
 
     statusCode = 402
 
-    if len(extraInfoList):
+    if len(extraInfoList) or isAdmin:
         extraInfo = database.execute("select extraInfo from posts where postID=? ", (args["args"]["postId"],)).fetchall()[0][0]
         statusCode = 200
 
