@@ -26,7 +26,7 @@
         <div id="commentModal" class="modal">
             <div class="modal-content">
                 <!-- Close button -->
-                <span class="close">&times;</span>
+                <span class="close" id="closeCommentModal">&times;</span>
 
                 <!-- Comments list -->
                 <h2>Comments</h2>
@@ -47,31 +47,46 @@
         <div id="extraInfoModal" class="modal">
             <div class="modal-content">
                 <!-- Close button -->
-                <span class="close">&times;</span>
+                <span class="close" id="closeExtraInfoModal">&times;</span>
+                <p id="purchaseError"></p>
 
                 <!-- Buy extra info -->
                 <form id="extraInfoForm">
                     <div class="form-group">
                         <label for="cardNumber">Card Number:<br></label>
-                        <input type="text" id="cardNumber" name="cardNumber" required>
+                        <input type="number" min="1000000000000000" max="9999999999999999" id="cardNumber" name="cardNumber" required>
                     </div>
 
                     <div class="form-group">
                         <label for="expireMonth">Expiry Month:<br></label>
-                        <input type="text" id="expireMonth" name="expireMonth" required>
+
+                        <select id="expireMonth" name="expireMonth" required>
+                            <option value="1">Jan</option>
+                            <option value="2">Feb</option>
+                            <option value="3">Mar</option>
+                            <option value="4">Apr</option>
+                            <option value="5">May</option>
+                            <option value="6">Jun</option>
+                            <option value="7">Jul</option>
+                            <option value="8">Aug</option>
+                            <option value="9">Sep</option>
+                            <option value="10">Oct</option>
+                            <option value="11">Nov</option>
+                            <option value="12">Dec</option>
+                        </select>
                     </div>
 
                     <div class="form-group">
                         <label for="expireYear">Expiry Year:<br></label>
-                        <input type="text" id="expireYear" name="expireYear" required>
+                        <input type="number" min="2026" max="9999" id="expireYear" name="expireYear" required>
                     </div>
 
                     <div class="form-group">
                         <label for="ccv">CVV:<br></label>
-                        <input type="text" id="ccv" name="ccv" required>
+                        <input type="number" min="0" max="999" id="ccv" name="ccv" required>
                     </div>
 
-                    <button type="submit" id="submit-extrainfo">Buy</button>
+                    <br><button type="submit" id="submit-extrainfo" onclick="">Buy</button><br>
                 </form>
             </div>
         </div>
