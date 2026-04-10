@@ -12,7 +12,7 @@ async function displayPost(id, title, content, extraInfo, extraInfoPurchased, ap
     card.innerHTML = '<h2>' + title + '</h2> <p>' + content + '</p><p>Extra Info:</p><p>' + extraInfo + '</p>';
 
     if(approval) {
-        card.innerHTML += '<button class="approve-button" onclick="setPostApproval(' + id + ', true)">Approve</button> <button class="deny-button" onclick="setPostApproval(' + id + ', false)">Deny</button> <div class="admin-card-footer">Posted by ID: ' + id + '</div>';
+        card.innerHTML += '<button class="approve-button" onclick="setPostApproval(' + id + ', true)">Approve</button> <button class="deny-button" onclick="setCommentApproval(' + id + ', false)">Deny</button> <div class="admin-card-footer">Posted by ID: ' + id + '</div>';
     }
 
     card.innerHTML += '<button class="comment-button" onclick="showComments(' + id + ')">Comments</button>';
@@ -86,6 +86,86 @@ async function loadPostsForApproval() {
             let extraInfoPurchased = (await extraInfoResponse.ok ? true : false);
 
             displayPost(post.postId, post.title, post.content, await extraInfoResponse.text(), extraInfoPurchased, true);
+        }
+    }
+}
+
+//set comment approval
+async function setCommentApproval(id, approved) {
+    // TODO: Use UPDATE
+    const approveResponse = await fetch("/api/adminGiveCommentApproval?commentId=" + id + "&approved=" + (approved ? 1 : 0));
+
+    if(!(await approveResponse.ok)) {
+        console.log("Error: failed to set post approval for post " + id + "\nReason: " + await approveResponse.text());
+    }
+    else {
+        document.getElementById("card-" + id).remove();
+    }
+}
+
+// Display a specific post in the grid
+async function displayCommentPost(id, title, content) {
+    console.log("Displaying post '" + id + "'");
+
+    let card = document.createElement("div");
+    card.id = "card-" + id;
+    card.classList.add("card");
+
+    // Create content for card
+    card.innerHTML = '<h2>' + title + '</h2> <p>' + content + '</p>';
+
+    card.innerHTML += '<button class="approve-button" onclick="setCommentApproval(' + id + ', true)">Approve</button> <button class="deny-button" onclick="setCommentApproval(' + id + ', false)">Deny</button> <div class="admin-card-footer">Comment ID: ' + id + '</div>';
+
+    card.innerHTML += '<button class="comment-button" onclick="showComments(' + id + ')">Comments</button>';
+    
+    // Append onto the grid
+    let container = document.getElementById("cardContainer");
+    container.appendChild(card);
+}
+
+// Display comments for approval (admin)
+async function loadCommentsForApproval() {
+    console.log("Loading Comments for approval")
+
+    // GET comments
+    const commentsResponse = await fetch("/api/adminViewCommentApprovalList");
+
+    if(!(await commentsResponse.ok)) {
+        // For some reason the endpoint did not succeed, error
+        console.log("Failed to retrieve Comments from /adminViewCommentsApprovalList endpoint");
+    }
+    else {
+        console.log("Got Comments from /adminViewCommentsApprovalList endpoint");
+        const comments = JSON.parse(await commentsResponse.text());
+
+        // Display each comment
+        for(const [key, comment] of Object.entries(comments)) {
+            let com = "comment"
+            console.log(comment.commentId)
+            displayCommentPost(comment.commentId, com, comment.content);
+        }
+    }
+}
+
+// Display posts for approval (admin)
+async function loadCommentsForApproval2() {
+    console.log("Loading posts for approval")
+
+    // GET posts
+    const postsResponse = await fetch("/api/adminViewCommentApprovalList");
+
+    if(!(await postsResponse.ok)) {
+        // For some reason the endpoint did not succeed, error
+        console.log("Failed to retrieve posts from /adminViewPostApprovalList endpoint");
+    }
+    else {
+        console.log("Got posts from /adminViewPostApprovalList endpoint");
+        const posts = JSON.parse(await postsResponse.text());
+
+        // Display each post
+        for(const [key, post] of Object.entries(posts)) {
+            console.log(post.postId)
+            displayCommentPost(post.postId, post.content, post.content);
         }
     }
 }
