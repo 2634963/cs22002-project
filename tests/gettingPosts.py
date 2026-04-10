@@ -5,12 +5,16 @@ def test():
 
     response = requests.get(serverUrl + "/api/viewPostList")
 
+    print("attempting to get posts")
+
     if response.status_code != 200:
         print("failed to get post list")
         return False
 
     if len(response.content) == 2: # empty json object, {}
         print("post list was empty, but test not failed")
+
+    print("successfully got posts")
 
     return True
 

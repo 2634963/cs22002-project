@@ -33,13 +33,19 @@ if not accountCreationAndSignin.test():
     print("cannot run remaining tests without an account")
     exit(-1)
 
+print("\n========================================================\n")
+
 testSuccessDict = {}
 
 testSuccessDict["making posts"] = makingPosts.test()
+print("\n========================================================\n")
 testSuccessDict["getting posts"] = gettingPosts.test()
 
+print("\n========================================================\n")
 testSuccessDict["making comments"] = makingComments.test()
+print("\n========================================================\n")
 testSuccessDict["getting comments"] = gettingComments.test()
+print("\n========================================================\n")
 
-# testSuccessDict["purchasing extra information"] = purchaseExtraInformation.test()
+testSuccessDict["purchasing extra information"] = purchaseExtraInformation.test()
 # testSuccessDict["getting extra information"] = getExtraInformation.test()
