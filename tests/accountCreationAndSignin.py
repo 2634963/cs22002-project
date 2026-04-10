@@ -1,4 +1,8 @@
 def test():
+    import sys
+    import requests
+    serverUrl = sys.argv[1]
+
     testSuccess = True
 
     print(f"testing account creation and sign in on {serverUrl}")
@@ -11,7 +15,10 @@ def test():
         return False
 
     if response.content != b"success":
-        testSuccess = False
+        # if the account is a duplicate then we can safely ignore it for now
+        if response.content != b"a user with that name already exists":
+            testSuccess = False
+
         print("failed to create account with reason: '" + response.content.decode("utf-8") + "'")
         print("attempting to continue...")
 

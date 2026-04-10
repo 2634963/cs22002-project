@@ -1,4 +1,8 @@
 def test():
+    import sys
+    import requests
+    serverUrl = sys.argv[1]
+
     testSuccess = True
 
     print("attempting to sign in")

@@ -17,13 +17,16 @@ def call(args):
         return flask.Response("please sign in", 401)
 
     if not len(args["args"]["content"]):
-        return flask.Response("no comment content", 422)
+        return flask.Response("no comment content", 400)
+
+    if len(args["args"]["content"]) > 200:
+        return flask.Response("comment too long", 400)
 
     commentId = database.execute("select count(*) from comments").fetchall()[0][0]
 
     userId = database.execute("select * from authTokens where authTokenString=? ", (args["cookies"]["authToken"],)).fetchall()[0][0]
 
-    database.execute("INSERT INTO comments (postID, userID, content, approved, commentID) VALUES (?, ?, ?, '0', ?)", (args["args"]["postId"], userId, args["args"]["content"], commentId))
+    database.execute("INSERT INTO comments (postID, authorUserID, content, approved, commentID) VALUES (?, ?, ?, '0', ?)", (args["args"]["postId"], userId, args["args"]["content"], commentId))
 
     connection.commit()
 

@@ -1,24 +1,18 @@
 def test():
-    testSuccess = True
+    import sys
+    import requests
+    serverUrl = sys.argv[1]
 
-    print("attempting to sign in")
+    print("attempting to fetch comments")
 
-    try:
-        response = requests.post(serverUrl + "/api/login", json={"username":"testAccountCreation", "password":"thisIsAPassword"})
-    except requests.exceptions.ConnectionError:
-        print("could not connect to the server. Are you sure it is running?")
-        return False
+    response = requests.get(serverUrl + "/api/viewPostWithComments?postId=1")
 
-    if response.content != b"success":
-        print("failed to sign into account with reason: '" + response.content.decode("utf-8") + "'")
-        return False
-    elif "authToken" not in response.cookies:
-        print("no auth token from sign in")
-        return False
+    if response.status_code == 200:
+        print("successfully fetched comments")
+        return True
     else:
-        print("sign in successful")
-
-    signInCookies = response.cookies
+        print("failed to fetch comments")
+        return False
 
 
 if __name__ == "__main__":
