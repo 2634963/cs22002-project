@@ -21,7 +21,8 @@ h1 {
         margin-bottom: 20px;
     }
 
-    textarea{
+    textarea {
+        resize: none;
         text-align: center;
     }
 
