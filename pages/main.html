@@ -4,6 +4,7 @@
     <head>
         <!-- Styles -->
         <link rel="stylesheet" href="/stylesheets/mainStyles.css">
+        <link rel="stylesheet" href="/stylesheets/postStyles.css">
 
         <!-- Scripts -->
         <script src="/scripts/darkmode.js" defer></script>
@@ -15,37 +16,12 @@
     <body>
         <span id="navbar"></span>
         <script src="/scripts/include.js" onload="includeHTML('/pages/navbar.html', 'navbar')"></script>
-
-        <br>
-        <br>
-        <br>
-        <br>
-
-        <!-- These buttons should be Temp-->
-        <!-- Dark Mode Button Toggle -->
-        <button id="theme-toggle">Toggle Dark Mode</button>
-
-        <!-- Button for creating posts -->
-        <button onclick="createPost()">Create Post</button>
-
-        <!-- infinite posts button -->
-        <button onclick="createInfinitePosts()">Create Infinite Posts</button>
-
-        <!-- Button for creating post with comments -->
-        <button onclick="createPostWithComment()">Create Post with Comments</button>
-
-        <!-- modal button-->
-        <button onclick="comment()">Comment Modal</button>
         
         <h1>FessUp</h1>
-
-        <br>
-        <br>
         
         <!-- Cards for Fess Up (press button to generate)-->
-         <div class="cards" id="cardContainer">
-
-         </div>
+        <div class="cards" id="cardContainer">
+        </div>
 
         <div id="commentModal" class="modal">
             <div class="modal-content">
