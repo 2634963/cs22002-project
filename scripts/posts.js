@@ -110,6 +110,7 @@ async function showComments(id) {
         
         const commentsContainer = document.getElementById("comments");
         commentsContainer.innerHTML = "";
+        document.getElementById("commentPostId").value = id;
 
         // if no comments exist
         if (Object.keys(commentsJson).length === 0) {
@@ -144,6 +145,33 @@ async function showComments(id) {
         if (event.target == modal) {
             modal.style.display = "none";
         }
+    }
+
+    const commentSubmitButton = document.getElementById("commentSubmitButton");
+    commentSubmitButton.onclick = function() {
+        createPostComment(id);
+    };
+
+}
+
+async function createPostComment(id) {
+    console.log("Create comment button presserd")
+
+    //get comment text from 
+    const commentInput = document.getElementById("commentPoster");
+    const commentText = commentInput.value;
+    const postId = id;
+
+    console.log(postId);
+    console.log(commentText);
+
+    //go to back end
+    const res = await fetch("/api/postComment?postId=" + postId + "&content=" + encodeURIComponent(commentText));
+
+    if (!(await res.ok)) {
+        console.log("comment wasnt made")
+    } else {
+        console.log("comment was made "  + commentText)
     }
 }
 

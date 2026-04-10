@@ -69,12 +69,16 @@ def getFile(filePath: str) -> (str | None):
         print("\n============================================================================\n")
         return None
 
+import threading
+threadLock = threading.Lock()
+
 # this is the function flask calls whenever a request is made
 # it will use the above function to go and find, then serve, any page that exists
 @app.route("/", defaults={"path":""}) # type: ignore
 @app.route("/<path:path>", methods=["GET", "POST"]) # type: ignore
 def servePage(path):
     try:
+        threadLock.acquire(True)
         requestArgs = {
             "args":flask.request.args,
             "cookies":flask.request.cookies
@@ -85,25 +89,31 @@ def servePage(path):
 
         # blank path means main page
         if not path:
+            threadLock.release()
             return getFile("./pages/main.html")
 
         # If a non admin attempts to access the admin dashboard, deny access
         elif (len(path.split("/")) >= 2) and path.split("/")[1] == "admin" and not userIsAdmin():
+            threadLock.release()
             return flask.Response(getFile("./pages/__adminDenial.html"), 404)
 
         # If a non logged-in user attempts to access anything, redirect them to login
         elif (path == "pages/post.html") and not isLoggedIn():
+            threadLock.release()
             return flask.Response(getFile("./pages/login.html"), 401)
 
         # dont currently have a favicon
         elif (path == "./favicon.ico") or (path == "favicon.ico"):
+            threadLock.release()
             return flask.Response("no favicon yet", status=404)
 
         # disallow access to root directory
         elif len(path.split("/")) == 1:
+            threadLock.release()
             return flask.Response("invalid path", 401)
 
         elif path.split("/")[-1].startswith("__"):
+            threadLock.release()
             return flask.Response("no such page", 404)
 
         # api calls are handled separately to pages
@@ -112,11 +122,13 @@ def servePage(path):
 
             # /api with no further details
             if len(splitPath) == 1:
+                threadLock.release()
                 return flask.Response("please use an endpoint", status=404)
 
             # if a page starts with "admin" then only an administrator account can access it
             elif splitPath[1].startswith("admin"):
                 if not userIsAdmin():
+                    threadLock.release()
                     return flask.Response("you must be an admin to do that", 403)
 
             # if the requested endpoint exists
@@ -124,8 +136,10 @@ def servePage(path):
                 # call said endpoint and get its return code
                 apiResponse = api.endpoints[splitPath[1]]["module"].call(requestArgs) # yes this is hacky but it works
 
+                threadLock.release()
                 return apiResponse
 
+            threadLock.release()
             return flask.Response(status=404)
 
         # default media type is html
@@ -140,11 +154,14 @@ def servePage(path):
         page = getFile(path)
 
         if page == None:
+            threadLock.release()
             return flask.Response("no such page", 404)
 
+        threadLock.release()
         return flask.Response(page, mimetype=mimeType)
 
     except Exception as e:
         print("Exception: " + str(e))
         print("Request arguments: " + str(requestArgs))
+        threadLock.release()
         return flask.Response("internal server error", 500)
