@@ -36,14 +36,14 @@ def call(args):
     if len(args["args"]["password"].encode("utf-8")) > 56:
         return flask.Response("password too long", 400)
 
-    userList = database.execute(f"select username from users where username='{args["args"]["username"]}'").fetchall()
+    userList = database.execute("select username from users where username=? ", (args["args"]["username"],)).fetchall()
 
     if len(userList):
         return flask.Response("a user with that name already exists", status=400)
 
     userId = database.execute("select count(*) from users").fetchall()[0][0]
 
-    database.execute(f"insert into users (userID, username, password, admin) values ('{userId}', '{args["args"]["username"]}', \"{hashPassword(args["args"]["password"])}\", 0)")
+    database.execute("insert into users (userID, username, password, admin) values (?, ?, ?, 0)", (userId, args["args"]["username"], hashPassword(args["args"]["password"])))
 
     connection.commit()
 

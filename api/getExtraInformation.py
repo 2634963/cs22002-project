@@ -13,13 +13,13 @@ def call(args):
     if not verifyAuthToken(args["cookies"]["authToken"]):
         return flask.Response("please sign in", 401)
 
-    userId = database.execute(f"select userID from authTokens where authTokenString='{args["cookies"]["authToken"]}'").fetchall()[0][0]
+    userId = database.execute("select userID from authTokens where authTokenString=? ", (args["cookies"]["authToken"],)).fetchall()[0][0]
 
-    extraInfoList = database.execute(f"select * from extraInfoAccess where userID='{userId}' and postID='{args["args"]["postId"]}'").fetchall()
+    extraInfoList = database.execute("select * from extraInfoAccess where userID=? and postID=? ", (userId, args["args"]["postId"])).fetchall()
 
     extraInfo = "You don't have access to the extra info for this post, but you can buy access for only £1!"
 
     if len(extraInfoList):
-        extraInfo = database.execute(f"select extraInfo from posts where postID='{args["args"]["postId"]}'").fetchall()[0][0]
+        extraInfo = database.execute("select extraInfo from posts where postID=? ", (args["args"]["postId"],)).fetchall()[0][0]
 
     return flask.Response(extraInfo, status=200)

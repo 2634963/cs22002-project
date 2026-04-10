@@ -10,11 +10,11 @@ def call(args):
         return flask.Response("no approval", 400)
 
     if args["args"]["approved"] == "1":
-        database.execute(f"update posts set approved=1 where postID='{args["args"]["postId"]}'")
+        database.execute("update posts set approved=1 where postID=? ", (args["args"]["postId"],))
         connection.commit()
 
     elif args["args"]["approved"] == "0":
-        database.execute(f"delete from posts where postID='{args["args"]["postId"]}'")
+        database.execute("delete from posts where postID=? ", (args["args"]["postId"],))
         connection.commit()
 
     else:

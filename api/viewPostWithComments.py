@@ -7,7 +7,7 @@ def call(args):
     if "postId" not in args["args"]:
         return flask.Response("no post id", 400)
 
-    commentList = database.execute(f"select * from comments where postID='{args["args"]["postId"]}' and approved=1").fetchall()
+    commentList = database.execute("select * from comments where postID=? and approved=1", (args["args"]["postId"],)).fetchall()
 
     commentDict = {}
 

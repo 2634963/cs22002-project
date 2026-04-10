@@ -11,7 +11,7 @@ def call(args):
     if "reason" not in args["args"]:
         return flask.Response("no reason", 400)
 
-    database.execute(f"delete from posts where postId='{args["args"]["postId"]}'")
+    database.execute("delete from posts where postId=? ", (args["args"]["postId"],))
 
     connection.commit()
 

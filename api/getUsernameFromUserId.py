@@ -6,7 +6,7 @@ def call(args):
     if "userId" not in args["args"]:
         return flask.Response("no user id", 400)
 
-    usernameList = database.execute(f"select username from users where userID='{args["args"]["userId"]}'").fetchall()
+    usernameList = database.execute("select username from users where userID=?", (args["args"]["userId"],)).fetchall()
 
     if not usernameList:
         return flask.Response("no such user exists", 404)

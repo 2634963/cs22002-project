@@ -12,11 +12,11 @@ def call(args):
         return flask.Response("no approval", 400)
 
     if args["args"]["approved"] == 1:
-        database.execute(f"update comments set approved where commendID='{args["args"]["commentId"]}'")
+        database.execute("update comments set approved where commentID=? ", (args["args"]["commentId"],))
         connection.commit()
 
     elif args["args"]["approved"] == 0:
-        database.execute(f"delete from comments where commendID='{args["args"]["commendId"]}'")
+        database.execute("delete from comments where commentID=? ", (args["args"]["commendId"],))
         connection.commit()
 
     else:

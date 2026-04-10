@@ -35,9 +35,9 @@ def call(args):
     if response == 200:
         # payment success
         paymentId = database.execute("select count(*) from extraInfoAccess").fetchall()[0][0]
-        userId = database.execute(f"select userId from authTokens where authTokenString='{args["cookies"]["authToken"]}'").fetchall()[0][0]
+        userId = database.execute("select userId from authTokens where authTokenString=? ", (args["cookies"]["authToken"],)).fetchall()[0][0]
 
-        database.execute(f"insert into extraInfoAccess (paymentID, userID, postID) values ('{paymentId}', '{userId}', '{args["args"]["postId"]}')")
+        database.execute("insert into extraInfoAccess (paymentID, userID, postID) values (?, ?, ?)", (paymentId, userId, args["args"]["postId"]))
 
         connection.commit()
 
