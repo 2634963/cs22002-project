@@ -1,7 +1,7 @@
 // Script to handle post display
 
 // Display a specific post in the grid
-async function displayPost(id, title, content, approval) {
+async function displayPost(id, title, content, extraInfo, extraInfoPurchased, approval) {
     console.log("Displaying post '" + title + "'");
 
     let card = document.createElement("div");
@@ -9,7 +9,7 @@ async function displayPost(id, title, content, approval) {
     card.classList.add("card");
 
     // Create content for card
-    card.innerHTML = '<h2>' + title + '</h2> <p>' + content + '</p>';
+    card.innerHTML = '<h2>' + title + '</h2> <p>' + content + '</p><p>Extra Info:</p><p>' + extraInfo + '</p>';
 
     if(approval) {
         card.innerHTML += '<button class="approve-button" onclick="setPostApproval(' + id + ', true)">Approve</button> <button class="deny-button" onclick="setPostApproval(' + id + ', false)">Deny</button> <div class="admin-card-footer">Posted by ID: ' + id + '</div>';
@@ -17,6 +17,11 @@ async function displayPost(id, title, content, approval) {
 
     card.innerHTML += '<button class="comment-button" onclick="showComments(' + id + ')">Comments</button>';
 
+    if(!extraInfoPurchased && !approval)
+    {
+        card.innerHTML += '<button class="comment-button" onclick="showExtraInfoModal(' + id + ')">Buy Extra Info</button>'
+    }
+    
     // Append onto the grid
     let container = document.getElementById("cardContainer");
     container.appendChild(card);
@@ -39,7 +44,11 @@ async function loadPosts() {
 
         // Display each post
         for(const [key, post] of Object.entries(posts)) {
-            displayPost(post.postId, post.title, post.content, false);
+            // GET extra info, if the user has access
+            const extraInfoResponse = await fetch("/api/getExtraInformation?postId=" + post.postId);
+            let extraInfoPurchased = (await extraInfoResponse.ok ? true : false);
+
+            displayPost(post.postId, post.title, post.content, await extraInfoResponse.text(), extraInfoPurchased, false);
         }
     }
 }
@@ -73,7 +82,10 @@ async function loadPostsForApproval() {
 
         // Display each post
         for(const [key, post] of Object.entries(posts)) {
-            displayPost(post.postId, post.title, post.content, true);
+            const extraInfoResponse = await fetch("/api/getExtraInformation?postId=" + post.postId);
+            let extraInfoPurchased = (await extraInfoResponse.ok ? true : false);
+
+            displayPost(post.postId, post.title, post.content, await extraInfoResponse.text(), extraInfoPurchased, true);
         }
     }
 }
@@ -118,9 +130,60 @@ async function showComments(id) {
     }
     
     let modal = document.getElementById("commentModal");
-    let span = document.getElementsByClassName("close")[0];
+    let span = document.getElementById("closeCommentModal");
 
     modal.style.display = "block";
+
+    if (span) {
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+    }
+
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+}
+
+// Display the purchase modal
+async function showExtraInfoModal(id) {
+    console.log('Purchase model displayed for post ' + id);
+
+    let modal = document.getElementById("extraInfoModal");
+    let span = document.getElementById("closeExtraInfoModal");
+
+    modal.style.display = "block";
+
+    // Set submit function to use purchase info for current post ID
+    document.getElementById("extraInfoForm").addEventListener('submit', async function(event) {
+        event.preventDefault();
+        document.getElementById('purchaseError').textContent = "";
+
+        // Send card details to backend and store the response
+        const purchaseResponse = await fetch("/api/purchaseExtraInformation", {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+
+            method: "POST",
+            body: JSON.stringify({postId: id,
+                                  cardNumber: document.getElementById('cardNumber').value,
+                                  expireMonth: document.getElementById('expireMonth').value,
+                                  expireYear: document.getElementById('expireYear').value,
+                                  ccv: document.getElementById('ccv').value})
+        });
+
+        if(!(await purchaseResponse.ok)) {
+            document.getElementById('purchaseError').textContent = "Error: " + await purchaseResponse.text();
+        }
+        else {
+            console.log("Purchase successful");
+            window.location.href = "/pages/main.html";
+        }
+    });
 
     if (span) {
         span.onclick = function() {
