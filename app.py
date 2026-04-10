@@ -77,7 +77,7 @@ def servePage(path):
         "cookies":flask.request.cookies
     }
 
-    if flask.request.method == "POST":
+    if flask.request.method != "GET":
         requestArgs["args"] = json.loads(flask.request.data)
 
     # blank path means main page
