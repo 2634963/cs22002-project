@@ -1,7 +1,7 @@
 // Script to handle post display
 
 // Display a specific post in the grid
-async function displayPost(id, title, content, approval) {
+async function displayPost(id, title, content, extraInfo, approval) {
     console.log("Displaying post '" + title + "'");
 
     let card = document.createElement("div");
@@ -9,7 +9,7 @@ async function displayPost(id, title, content, approval) {
     card.classList.add("card");
 
     // Create content for card
-    card.innerHTML = '<h2>' + title + '</h2> <p>' + content + '</p>';
+    card.innerHTML = '<h2>' + title + '</h2> <p>' + content + '</p><p>Extra Info:</p><p>' + extraInfo + '</p>';
 
     if(approval) {
         card.innerHTML += '<button class="approve-button" onclick="setPostApproval(' + id + ', true)">Approve</button> <button class="deny-button" onclick="setPostApproval(' + id + ', false)">Deny</button> <div class="admin-card-footer">Posted by ID: ' + id + '</div>';
@@ -39,7 +39,10 @@ async function loadPosts() {
 
         // Display each post
         for(const [key, post] of Object.entries(posts)) {
-            displayPost(post.postId, post.title, post.content, false);
+            // GET extra info, if the user has access
+            const extraInfoResponse = await fetch("/api/getExtraInformation?postId=" + post.postId);
+
+            displayPost(post.postId, post.title, post.content, await extraInfoResponse.text(), false);
         }
     }
 }
