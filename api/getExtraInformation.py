@@ -25,4 +25,4 @@ def call(args):
         extraInfo = database.execute("select extraInfo from posts where postID=? ", (args["args"]["postId"],)).fetchall()[0][0]
         statusCode = 402
 
-    return flask.Response(extraInfo, status=200)
+    return flask.Response(extraInfo, status=statusCode)
