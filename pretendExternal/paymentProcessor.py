@@ -1,3 +1,7 @@
+# this is a separate flask server which is intended to imitate a payment processor
+# it doesnt verify that any of the details are valid so that real card information doesnt have to be put in
+# in real world production this would be a call to mastercard or visa but this is sufficient for our purposes
+
 # flask --app paymentProcessor run -p 3000
 
 from flask import Flask
@@ -45,6 +49,7 @@ def checkExpiry(monthString, yearString):
     return True
 
 def checkCCV(ccvString):
+    # we dont support amex
     if len(ccvString) !=3:
         return False
 
@@ -72,13 +77,13 @@ def homePage():
 @app.route("/submitPayment")
 def submitPayment():
     def error():
-        return "<p>invalid card details or no payment amount</p>"
+        return "invalid card details or no payment amount"
 
     print(request.remote_addr)
     print(request.remote_user)
 
     if (not app.debug) and request.host_url.startswith("https"):
-        return "<p>connection not secure, please connect again using https", 400
+        return "connection not secure, please connect again using https", 400
 
     #                                      thing to get,         default value if not present
     cardNumber         = request.args.get("cardNumber",         "invalid")
@@ -99,4 +104,4 @@ def submitPayment():
     if not checkPaymentAmount(paymentAmountPence):
         return error(), 400
 
-    return "<p>success<p>", 200
+    return "success", 200
