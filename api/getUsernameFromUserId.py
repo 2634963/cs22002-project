@@ -1,6 +1,7 @@
 from api._databaseConnection import database
 
 import flask
+import json
 
 def call(args):
     if "userId" not in args["args"]:
@@ -11,4 +12,4 @@ def call(args):
     if not usernameList:
         return flask.Response("no such user exists", 404)
 
-    return flask.Response(usernameList[0][0], 200)
+    return flask.Response(json.dumps({"0":usernameList[0][0]}), 200)
