@@ -11,7 +11,7 @@ def call(args):
     if "password" not in args["args"]:
         return flask.Response("no password", 400)
 
-    userList = database.execute(f"select * from users where username='{args["args"]["username"].lower()}'").fetchall()
+    userList = database.execute("select * from users where username=? ", (args["args"]["username"].lower(),)).fetchall()
 
     response = None
 
@@ -20,7 +20,7 @@ def call(args):
         if verifyPassword(args["args"]["password"], bytes(userList[0][2][2:-1], "utf-8")):
             response = flask.Response("success", 200)
 
-            authTokenList = database.execute(f"select * from authTokens where userID={userList[0][0]}").fetchall()
+            authTokenList = database.execute("select * from authTokens where userID=?", (userList[0][0],)).fetchall()
 
             authToken = ""
 
