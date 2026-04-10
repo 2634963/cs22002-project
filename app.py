@@ -120,7 +120,7 @@ def servePage(path):
                 return flask.Response("you must be an admin to do that", 403)
 
         # if the requested endpoint exists
-        elif splitPath[1] in api.endpoints:
+        if splitPath[1] in api.endpoints:
             # call said endpoint and get its return code
             apiResponse = api.endpoints[splitPath[1]]["module"].call(requestArgs) # yes this is hacky but it works
 
