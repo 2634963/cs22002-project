@@ -42,9 +42,12 @@ h1 {
     border: 3px solid #999999;
     border-radius: 3px;
 
-    display: grid;
+    display: block;
     grid-template-rows: max-content 200px 1fr;
+    word-wrap: anywhere;
     text-align: center;
+    max-height: 20rem;
+    overflow: scroll;
 
     h2 {
         font-size: 32px;
