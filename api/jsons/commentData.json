@@ -1,7 +1,30 @@
-[{
-    "postID":0,
-    "commentID": 0,
-    "authorUserID":0,
-    "content": "Here is the finest comment section",
-    "approved": 1
-}]
+[
+    {
+        "postID":0,
+        "commentID": 0,
+        "authorUserID":0,
+        "content": "Here is the finest comment section",
+        "approved": 1
+    },
+    {
+        "postID":0,
+        "commentID": 1,
+        "authorUserID":0,
+        "content": "Here is the another comment in the finest comment section",
+        "approved": 1
+    },
+    {
+        "postID":0,
+        "commentID": 2,
+        "authorUserID":0,
+        "content": "Here is the third comment in the finest comment section",
+        "approved": 1
+    },
+    {
+        "postID":0,
+        "commentID": 3,
+        "authorUserID":0,
+        "content": "Here is the fourth and for now final comment in the finest comment section",
+        "approved": 1
+    }
+]
