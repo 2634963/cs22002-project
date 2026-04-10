@@ -2,8 +2,6 @@ from api._databaseConnection import database, connection
 
 import flask
 
-print(__file__ + " has nothing to do with the database and must be updated")
-
 def call(args):
     if "commentId" not in args["args"]:
         return flask.Response("no comment id", 400)
@@ -11,12 +9,12 @@ def call(args):
     if "approved" not in args["args"]:
         return flask.Response("no approval", 400)
 
-    if args["args"]["approved"] == 1:
-        database.execute("update comments set approved where commentID=? ", (args["args"]["commentId"],))
+    if args["args"]["approved"] == "1":
+        database.execute("update comments set approved=1 where commentID=? ", (args["args"]["commentId"],))
         connection.commit()
 
-    elif args["args"]["approved"] == 0:
-        database.execute("delete from comments where commentID=? ", (args["args"]["commendId"],))
+    elif args["args"]["approved"] == "0":
+        database.execute("delete from comments where commentID=? ", (args["args"]["commentId"],))
         connection.commit()
 
     else:

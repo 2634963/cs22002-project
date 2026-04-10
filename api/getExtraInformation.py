@@ -19,7 +19,10 @@ def call(args):
 
     extraInfo = "You don't have access to the extra info for this post, but you can buy access for only £1!"
 
+    statusCode = 402
+
     if len(extraInfoList):
         extraInfo = database.execute("select extraInfo from posts where postID=? ", (args["args"]["postId"],)).fetchall()[0][0]
+        statusCode = 200
 
-    return flask.Response(extraInfo, status=200)
+    return flask.Response(extraInfo, status=statusCode)
