@@ -54,8 +54,16 @@ async function loadPosts() {
 }
 
 async function setPostApproval(id, approved) {
-    // TODO: Use UPDATE
-    const approveResponse = await fetch("/api/adminSetPostApproval?postId=" + id + "&approved=" + (approved ? 1 : 0));
+    const approveResponse = await fetch("/api/adminSetPostApproval", {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+
+        method: "UPDATE",
+        body: JSON.stringify({postId: id,
+                              approved: (approved ? "1" : "0")})
+    });
 
     if(!(await approveResponse.ok)) {
         console.log("Error: failed to set post approval for post " + id + "\nReason: " + await approveResponse.text());
@@ -92,8 +100,16 @@ async function loadPostsForApproval() {
 
 //set comment approval
 async function setCommentApproval(id, approved) {
-    // TODO: Use UPDATE
-    const approveResponse = await fetch("/api/adminGiveCommentApproval?commentId=" + id + "&approved=" + (approved ? 1 : 0));
+    const approveResponse = await fetch("/api/adminGiveCommentApproval", {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+
+        method: "UPDATE",
+        body: JSON.stringify({commentId: id,
+                              approved: (approved ? "1" : "0")})
+    });
 
     if(!(await approveResponse.ok)) {
         console.log("Error: failed to set post approval for post " + id + "\nReason: " + await approveResponse.text());

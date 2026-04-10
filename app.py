@@ -75,7 +75,7 @@ threadLock = threading.Lock()
 # this is the function flask calls whenever a request is made
 # it will use the above function to go and find, then serve, any page that exists
 @app.route("/", defaults={"path":""}) # type: ignore
-@app.route("/<path:path>", methods=["GET", "POST"]) # type: ignore
+@app.route("/<path:path>", methods=["GET", "POST", "UPDATE", "DELETE"]) # type: ignore
 def servePage(path):
     try:
         threadLock.acquire(True)
