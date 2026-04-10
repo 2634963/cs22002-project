@@ -18,7 +18,7 @@ def test():
     else:
         print("sign in successful")
 
-    signInCookies = response.cookies
+    normalSignInCookies = response.cookies
 
 
 if __name__ == "__main__":

@@ -1,6 +1,4 @@
 def test():
-    testSuccess = True
-
     print("attempting to sign in")
 
     try:
@@ -20,6 +18,16 @@ def test():
 
     signInCookies = response.cookies
 
+    response = requests.get(serverUrl + "/api/viewPostList")
+
+    if response.status_code != 200:
+        print("failed to get post list")
+        return False
+
+    if len(response.content) == 2: # empty json object, {}
+        print("post list was empty, but test not failed")
+
+    return True
 
 if __name__ == "__main__":
     import sys
