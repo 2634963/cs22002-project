@@ -5,13 +5,14 @@ async function displayPost(id, title, content, approval) {
     console.log("Displaying post '" + title + "'");
 
     let card = document.createElement("div");
+    card.id = "card-" + id;
     card.classList.add("card");
 
     // Create content for card
     card.innerHTML = '<h2>' + title + '</h2> <p>' + content + '</p>';
 
     if(approval) {
-        card.innerHTML += '<button class="approve-button" onclick="approve(this)">Approve</button> <button class="deny-button" onclick="deny(this)">Deny</button> <div class="admin-card-footer">Posted by ID: ' + id + '</div>';
+        card.innerHTML += '<button class="approve-button" onclick="setPostApproval(' + id + ', true)">Approve</button> <button class="deny-button" onclick="setPostApproval(' + id + ', false)">Deny</button> <div class="admin-card-footer">Posted by ID: ' + id + '</div>';
     }
 
     card.innerHTML += '<button class="comment-button" onclick="showComments(' + id + ')">Comments</button>';
@@ -53,8 +54,16 @@ async function loadPosts() {
     }
 }
 
-async function approvePost(id) {
+async function setPostApproval(id, approved) {
+    // TODO: Use UPDATE
+    const approveResponse = await fetch("/api/adminSetPostApproval?postId=" + id + "&approved=" + (approved ? 1 : 0));
 
+    if(!(await approveResponse.ok)) {
+        console.log("Error: failed to set post approval for post " + id + "\nReason: " + await approveResponse.text());
+    }
+    else {
+        document.getElementById("card-" + id).remove();
+    }
 }
 
 // Display posts for approval (admin)
@@ -84,7 +93,7 @@ async function loadPostsForApproval() {
         // Display each post
         for(let i = 0; i < postCount; i++)
         {
-            displayPost(posts[i].postId, posts[i].title, posts[i].content, false)
+            displayPost(posts[i].postId, posts[i].title, posts[i].content, true)
         }
     }
 }

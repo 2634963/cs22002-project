@@ -4,8 +4,7 @@ import json
 import flask
 
 def call(args):
-    # TODO: approved=1
-    postList = database.execute("select * from posts where approved=0").fetchall()
+    postList = database.execute("select * from posts where approved=1").fetchall()
     print(postList)
 
     postDict = {}
