@@ -1,22 +1,26 @@
-//Create post JS for post.html
+postForm.addEventListener('submit', async function(event) {
+    // HTML forms don't send JSON, so suppress it and do it ourselves
+    event.preventDefault();
 
-//get element form
-const postForm = document.getElementById('postForm');
+    // POST the post :D
+    const postResponse = await fetch("/api/createPost", {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
 
-//event listener for form submission
-postForm.addEventListener('submit', function(event) {
-    event.preventDefault(); 
-    const title = document.getElementById('title').value;
-    const content = document.getElementById('content').value;
+        method: "POST",
+        body: JSON.stringify({title: document.getElementById("title").value,
+                              content: document.getElementById("content").value,
+                              extraInfo: document.getElementById("extraInfo").value})
+    });
 
-    //console log
-    console.log('Title:' + title + ' content: ' + content);
-
-    //turn message to variable
-    const contents = 'New post created with title: ' + title + ' and content: ' + content;
-
-    //transmit to api
-    fetch('/api/log?message=' + encodeURIComponent(contents))
-    .catch(error => console.error(error));
-
+    if(!(await postResponse.ok)) {
+        document.getElementById('error').textContent = "Error: " + await postResponse.text();
+    }
+    else {
+        console.log("POST post post successful! :D");
+        document.getElementById('error').textContent = "";
+        document.getElementById('success').textContent = "Post added to moderation queue!"
+    }
 });

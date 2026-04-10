@@ -5,7 +5,7 @@
     <head>
         <!-- Links to Styles sheet -->
         <link rel="stylesheet" href="/stylesheets/postStyles.css">
-        
+
         <script src="/scripts/createPost.js" defer></script>
 
         <title>FessUp - Posts</title>
@@ -17,21 +17,28 @@
 
         <h1> Create a Post </h1>
 
-        <div class = "post-container">
-            <form id = "postForm">
-                <div class = "form-group">
-                    <label for="title">Title: <br></label>
+        <div class="post-container">
+            <p id="error"></p>
+            <p id="success"></p>
+
+            <form id="postForm">
+                <div class="form-group">
+                    <label for="title">Title:<br></label>
                     <input type="text" id="title" name="title" required>
                 </div>
 
-                <div class = "form-group">
-                    <label for="content">Content: <br></label>
+                <div class="form-group">
+                    <label for="content">Content:<br></label>
                     <textarea id="content" name="content" rows="20" cols="60" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="extraInfo">Extra Info (Optional)</label>
+                    <textarea id="extraInfo" name="extraInfo" rows="20" cols="60"></textarea>
                 </div>
 
                 <button type="submit" id="submit-post">Submit Post</button>
             </form>
         </div>
     </body>
-
 </html>
