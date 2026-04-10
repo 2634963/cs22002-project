@@ -5,6 +5,7 @@ app = flask.Flask(__name__)
 import api
 import api._databaseConnection
 import json
+from api._getAuthToken import verifyAuthToken
 
 def userIsLoggedIn():
     if "authToken" not in flask.request.cookies:
@@ -17,7 +18,7 @@ def userIsLoggedIn():
     if len(userIdList) == 0:
         return False
 
-    return True
+    return verifyAuthToken(authToken)
 
 def userIsAdmin():
     if "authToken" not in flask.request.cookies:
@@ -43,7 +44,7 @@ def userIsAdmin():
     if adminValue == 0:
         return False
 
-    return True
+    return verifyAuthToken(authToken)
 
 # function for getting a file, this way any file that exists in the /pages/
 def getFile(filePath: str) -> (str | None):
@@ -104,7 +105,7 @@ def servePage(path):
         return flask.Response("invalid path", 401)
 
     elif path.split("/")[-1].startswith("__"):
-            return flask.Response("no such page", 404)
+        return flask.Response("no such page", 404)
 
     # api calls are handled separately to pages
     elif path.split("/")[0] == "api":
