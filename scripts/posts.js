@@ -12,7 +12,7 @@ async function displayPost(id, title, content, extraInfo, extraInfoPurchased, ap
     card.innerHTML = '<h2>' + title + '</h2> <p>' + content + '</p><p>Extra Info:</p><p>' + extraInfo + '</p>';
 
     if(approval) {
-        card.innerHTML += '<button class="approve-button" onclick="setPostApproval(' + id + ', true)">Approve</button> <button class="deny-button" onclick="setCommentApproval(' + id + ', false)">Deny</button> <div class="admin-card-footer">Posted by ID: ' + id + '</div>';
+        card.innerHTML += '<button class="approve-button" onclick="setPostApproval(' + id + ', true)">Approve</button> <button class="deny-button" onclick="setPostApproval(' + id + ', false)">Deny</button> <div class="admin-card-footer">Posted by ID: ' + id + '</div>';
     }
 
     card.innerHTML += '<button class="comment-button" onclick="showComments(' + id + ')">Comments</button>';
