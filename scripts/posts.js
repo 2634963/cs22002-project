@@ -105,7 +105,7 @@ async function showComments(id) {
             commentsContainer.appendChild(commentDiv);
         } 
         else {
-            for (const [commentId, comment] of Object.entries(commentsJson)) {
+            for (const [key, comment] of Object.entries(commentsJson)) {
                 const commentDiv = document.createElement("div");
                 commentDiv.className = "comment";
                 commentDiv.textContent = comment.content;
