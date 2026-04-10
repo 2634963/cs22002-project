@@ -12,6 +12,6 @@ def call(args):
     commentDict = {}
 
     for comment in commentList:
-        commentDict[str(comment[0])] = {"content":comment[2]}
+        commentDict[str(comment[0])] = {"content":comment[3]}
 
     return flask.Response(json.dumps(commentDict), status=200)

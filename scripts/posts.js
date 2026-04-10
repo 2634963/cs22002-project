@@ -85,6 +85,8 @@ async function showComments(id) {
     //fetchg commetns 
     const commentDict = await fetch("/api/viewPostWithComments?postId=" + id);
 
+    console.log(commentDict.keys);
+
     if (!(await commentDict.ok)) {
         console.log(commentDict);
         console.log("Failed to load comments")
@@ -104,6 +106,7 @@ async function showComments(id) {
             commentDiv.textContent = "There are no comments yet :(";
             commentsContainer.appendChild(commentDiv);
         } 
+        //append all to modal conteainer
         else {
             for (const [key, comment] of Object.entries(commentsJson)) {
                 const commentDiv = document.createElement("div");
