@@ -1,23 +1,4 @@
 def test():
-    print("attempting to sign in")
-
-    try:
-        response = requests.post(serverUrl + "/api/login", json={"username":"testAccountCreation", "password":"thisIsAPassword"})
-    except requests.exceptions.ConnectionError:
-        print("could not connect to the server. Are you sure it is running?")
-        return False
-
-    if response.content != b"success":
-        print("failed to sign into account with reason: '" + response.content.decode("utf-8") + "'")
-        return False
-    elif "authToken" not in response.cookies:
-        print("no auth token from sign in")
-        return False
-    else:
-        print("sign in successful")
-
-    signInCookies = response.cookies
-
     response = requests.get(serverUrl + "/api/viewPostList")
 
     if response.status_code != 200:
