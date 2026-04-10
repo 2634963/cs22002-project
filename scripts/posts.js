@@ -80,15 +80,49 @@ async function loadPostsForApproval() {
 
 // Display the comments for a specific post
 async function showComments(id) {
-    console.log('Comment button pressed');
+    console.log('Comment button pressed ' + id );
 
+    //fetchg commetns 
+    const commentDict = await fetch("/api/viewPostWithComments?postId=" + id);
+
+    if (!(await commentDict.ok)) {
+        console.log(commentDict);
+        console.log("Failed to load comments")
+    }
+    else {
+        const commentsJson = JSON.parse(await commentDict.text());
+        console.log(commentsJson)
+        console.log("comments: " + id + ": " + JSON.stringify(commentsJson));
+        
+        const commentsContainer = document.getElementById("comments");
+        commentsContainer.innerHTML = "";
+
+        // if no comments exist
+        if (Object.keys(commentsJson).length === 0) {
+            const commentDiv = document.createElement("div");
+            commentDiv.className = "comment";
+            commentDiv.textContent = "There are no comments yet :(";
+            commentsContainer.appendChild(commentDiv);
+        } 
+        else {
+            for (const [commentId, comment] of Object.entries(commentsJson)) {
+                const commentDiv = document.createElement("div");
+                commentDiv.className = "comment";
+                commentDiv.textContent = comment.content;
+                commentsContainer.appendChild(commentDiv);
+            }
+        }
+    }
+    
     let modal = document.getElementById("commentModal");
     let span = document.getElementsByClassName("close")[0];
 
     modal.style.display = "block";
 
-    span.onclick = function() {
-        modal.style.display = "none";
+    if (span) {
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
     }
 
     window.onclick = function(event) {
