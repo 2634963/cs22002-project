@@ -1,4 +1,5 @@
 from api._databaseConnection import database, connection
+from api._getAuthToken import verifyAuthToken
 
 import flask
 
@@ -13,6 +14,9 @@ def call(args):
         return flask.Response("no extra info", 400)
 
     if "authToken" not in args["cookies"]:
+        return flask.Response("please sign in", 401)
+
+    if not verifyAuthToken(args["cookies"]["authToken"]):
         return flask.Response("please sign in", 401)
 
     postId = database.execute("select count(*) from posts").fetchall()[0][0]

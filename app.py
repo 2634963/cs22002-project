@@ -7,7 +7,7 @@ import api._databaseConnection
 import json
 from api._getAuthToken import verifyAuthToken
 
-def userIsLoggedIn():
+def isLoggedIn():
     if "authToken" not in flask.request.cookies:
         return False
 
@@ -19,6 +19,7 @@ def userIsLoggedIn():
         return False
 
     return verifyAuthToken(authToken)
+
 
 def userIsAdmin():
     if "authToken" not in flask.request.cookies:
@@ -83,17 +84,14 @@ def servePage(path):
 
     # blank path means main page
     if not path:
-        if not userIsLoggedIn():
-            return flask.Response(getFile("./pages/login.html"), 401)
-        else:
-            return getFile("./pages/main.html")
+        return getFile("./pages/main.html")
 
     # If a non admin attempts to access the admin dashboard, deny access
     elif (len(path.split("/")) >= 2) and path.split("/")[1] == "admin" and not userIsAdmin():
         return flask.Response(getFile("./pages/__adminDenial.html"), 404)
 
     # If a non logged-in user attempts to access anything, redirect them to login
-    elif (path == "pages/post.html" or path == "pages/main.html") and not userIsLoggedIn():
+    elif (path == "pages/post.html" or path == "pages/main.html") and not isLoggedIn():
         return flask.Response(getFile("./pages/login.html"), 401)
 
     # dont currently have a favicon
