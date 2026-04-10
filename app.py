@@ -6,6 +6,19 @@ import api
 import api._databaseConnection
 import json
 
+def userIsLoggedIn():
+    if "authToken" not in flask.request.cookies:
+        return False
+
+    authToken = flask.request.cookies["authToken"]
+
+    userIdList = api._databaseConnection.database.execute(f"select userID from authTokens where authTokenString='{authToken}'").fetchall()
+
+    if len(userIdList) == 0:
+        return False
+
+    return True
+
 def userIsAdmin():
     if "authToken" not in flask.request.cookies:
         return False
@@ -69,21 +82,32 @@ def servePage(path):
 
     # blank path means main page
     if not path:
-        return getFile("./pages/main.html")
+        if not userIsLoggedIn():
+            return flask.Response(getFile("./pages/login.html"), 401)
+        else:
+            return getFile("./pages/main.html")
+
+    # If a non admin attempts to access the admin dashboard, deny access
+    elif (len(path.split("/")) >= 2) and path.split("/")[1] == "admin" and not userIsAdmin():
+        return flask.Response(getFile("./pages/__adminDenial.html"), 404)
+
+    # If a non logged-in user attempts to access anything, redirect them to login
+    elif (path == "pages/post.html" or path == "pages/main.html") and not userIsLoggedIn():
+        return flask.Response(getFile("./pages/login.html"), 401)
 
     # dont currently have a favicon
-    if (path == "./favicon.ico") or (path == "favicon.ico"):
+    elif (path == "./favicon.ico") or (path == "favicon.ico"):
         return flask.Response("no favicon yet", status=404)
 
     # disallow access to root directory
-    if len(path.split("/")) == 1:
+    elif len(path.split("/")) == 1:
         return flask.Response("invalid path", 401)
 
-    if path.split("/")[-1].startswith("__"):
+    elif path.split("/")[-1].startswith("__"):
             return flask.Response("no such page", 404)
 
     # api calls are handled separately to pages
-    if path.split("/")[0] == "api":
+    elif path.split("/")[0] == "api":
         splitPath = path.split("/")
 
         # /api with no further details
@@ -91,12 +115,12 @@ def servePage(path):
             return flask.Response("please use an endpoint", status=404)
 
         # if a page starts with "admin" then only an administrator account can access it
-        if splitPath[1].startswith("admin"):
+        elif splitPath[1].startswith("admin"):
             if not userIsAdmin():
                 return flask.Response("you must be an admin to do that", 403)
 
         # if the requested endpoint exists
-        if splitPath[1] in api.endpoints:
+        elif splitPath[1] in api.endpoints:
             # call said endpoint and get its return code
             apiResponse = api.endpoints[splitPath[1]]["module"].call(requestArgs) # yes this is hacky but it works
 
@@ -104,18 +128,13 @@ def servePage(path):
 
         return flask.Response(status=404)
 
-    if (len(path.split("/")) >= 2) and path.split("/")[1] == "admin":
-        if not userIsAdmin():
-            return flask.Response(getFile("./pages/__adminDenial.html"), 404)
-
     # default media type is html
     mimeType = "text/html"
 
     # change it if necessary
     if path.split(".")[-1] == "css":
         mimeType = "text/css"
-
-    if path.split(".")[-1] == "js":
+    elif path.split(".")[-1] == "js":
         mimeType = "text/javascript"
 
     page = getFile(path)
