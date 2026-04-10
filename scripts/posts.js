@@ -39,7 +39,7 @@ async function loadPosts() {
 
         // Display each post
         for(const [key, post] of Object.entries(posts)) {
-            displayPost(post.postId, post.title, post.content, true);
+            displayPost(post.postId, post.title, post.content, false);
         }
     }
 }
