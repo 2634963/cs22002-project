@@ -144,5 +144,7 @@ def servePage(path):
 
         return flask.Response(page, mimetype=mimeType)
 
-    except:
+    except Exception as e:
+        print("Exception: " + str(e))
+        print("Request arguments: " + str(requestArgs))
         return flask.Response("internal server error", 500)

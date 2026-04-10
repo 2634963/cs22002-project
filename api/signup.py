@@ -18,6 +18,8 @@ def call(args):
     if len(args["args"]["username"]) > 30:
         return flask.Response("username too long", 400)
 
+    args["args"]["username"] = args["args"]["username"].lower()
+
     # enforce usernames being lowercase alphanumeric only
     for char in args["args"]["username"]:
         if 'a' <= char <= 'z':
