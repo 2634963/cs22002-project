@@ -47,7 +47,7 @@ h1 {
     word-wrap: anywhere;
     text-align: center;
     max-height: 20rem;
-    overflow: scroll;
+    overflow: auto;
 
     h2 {
         font-size: 32px;
