@@ -10,6 +10,9 @@ def call(args):
     if len(args["args"]["title"]) < 4:
         return flask.Response("title too short", 400)
 
+    if len(args["args"]["title"]) > 250:
+        return flask.Response("title too long", 400)
+
     if "content" not in args["args"]:
         return flask.Response("no content", 400)
 
